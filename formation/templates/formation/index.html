@@ -1,0 +1,12 @@
+{% load static %}
+
+{% if formation_list %}
+    <ul>
+        {% for formation in formation_list %}
+            <li> {{ formation.name }} </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'formation:newFormationForm' %}"> New Formation </a>
+{% else %}
+    <p>No formation are available</p>
+{% endif %}
