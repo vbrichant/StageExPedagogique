@@ -26,8 +26,7 @@ class FormationInLine(admin.TabularInline):
 
 
 class FormateurAdmin(admin.ModelAdmin):
-    fieldsets = [('firstname', {'fields': ['firstname']}),
-                 ('lastname', {'fields': ['lastname']})]
+    fieldsets = [('name', {'fields': ['name']})]
     inlines = [FormationInLine]
 
 

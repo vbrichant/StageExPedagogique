@@ -1,0 +1,29 @@
+<h1>Formation : {{ formation_detail.name }}</h1>
+<p>Description : {{ formation_detail.description }}</p>
+<p> Formateur : {{ formation_detail.formateur }}</p>
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Lieu</th>
+        <th>Nombre max d'élève</th>
+    </tr>
+    {% for session in formation_detail.sessionformation_set.all %}
+        <tr>
+            <td>
+                <a href="{% url 'formation:session_detail' session.id %}">
+                    {{ session.id }}
+                </a>
+            </td>
+            <td>
+                {{ session.date }}
+            </td>
+            <td>
+                {{ session.place }}
+            </td>
+            <td>
+                {{ session.max_students }}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+<input type="button" value="Ajouter une nouvelle session"/>
