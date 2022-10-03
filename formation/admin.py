@@ -10,11 +10,11 @@ class SessionInLine(admin.TabularInline):
 
 
 class FormationAdmin(admin.ModelAdmin):
-    fieldsets = [('name', {'fields': ['name']}),
-                 ('description', {'fields': ['description']}),
-                 ('formateur', {'fields': ['formateur']})]
+    fieldsets = [('formateur', {'fields': ['formateur']}),
+                 ('name', {'fields': ['name']}),
+                 ('description', {'fields': ['description']})]
     inlines = [SessionInLine]
-    list_display = ('name', 'description', 'formateur')
+    list_display = ('name', 'description')
 
 
 admin.site.register(Formation, FormationAdmin)
@@ -23,14 +23,6 @@ admin.site.register(Formation, FormationAdmin)
 class FormationInLine(admin.TabularInline):
     model = Formation
     extra = 1
-
-
-class FormateurAdmin(admin.ModelAdmin):
-    fieldsets = [('name', {'fields': ['name']})]
-    inlines = [FormationInLine]
-
-
-admin.site.register(Formateur, FormateurAdmin)
 
 
 class InscriptionInLine(admin.TabularInline):
@@ -57,10 +49,21 @@ class InscriptionAdmin(admin.ModelAdmin):
 admin.site.register(Inscription, InscriptionAdmin)
 
 
+# User Models
+class FormateurAdmin(admin.ModelAdmin):
+    fieldsets = [('user', {'fields': ['user']}),
+                 ('matricule', {'fields': ['matricule']})
+                 ]
+    inlines = [FormationInLine]
+
+
+admin.site.register(Formateur, FormateurAdmin)
+
+
 class StudentAdmin(admin.ModelAdmin):
-    fieldsets = [('matricule', {'fields': ['matricule']}),
-                 ('name', {'fields': ['firstname']}),
-                 (None, {'fields': ['lastname']})]
+    fieldsets = [('user', {'fields': ['user']}),
+                 ('matricule', {'fields': ['matricule']})
+                 ]
     inlines = [InscriptionInLine]
 
 

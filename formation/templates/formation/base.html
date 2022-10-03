@@ -1,0 +1,24 @@
+{% load bootstrap5 %}
+{% load static %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<link rel="stylesheet" href="{% static 'formation/style.css' %}">
+<nav>
+    <div><a href="{% url 'formation:index' %}">Formation</a></div>
+    <div id="login_div">
+        {% if user.is_authenticated %}
+            <!-- Login Button -->
+            <button><a href="{% url 'logout' %}">Logout</a></button>
+            <!-- User Name (debug) -->
+            <div> {{ user }}</div>
+            <!-- Mes Formation (si Formateur) -->
+            <button><a href="{% url 'formation:formation_list_current_formateur' user.formateur.id %}"> Mes formation</a></button>
+            <!-- Mes Inscription (si Students) -->
+            <button><a href="{% url 'formation:formation_list_current_student' user.student.id %}"> Mes inscription</a></button>
+        {% else %}
+            <button><a href="{% url 'login' %}">Login</a></button>
+        {% endif %}
+    </div>
+</nav>
+{% block content %}
+{% endblock content %}

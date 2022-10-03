@@ -1,0 +1,9 @@
+<!-- A faire  -->
+{% load bootstrap5 %}
+{% block content %}
+    <form method="post">{% csrf_token %}
+        {% bootstrap_form form %}
+
+        <input type="submit" value="Save session">
+    </form>
+{% endblock content %}

@@ -4,8 +4,7 @@ from django.shortcuts import get_object_or_404
 # Create your views here.
 from .models import *
 from django.views import generic
-from formation.forms import NewFormationForm
-from django.contrib.auth.models import User
+from formation.forms import *
 from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -14,19 +13,37 @@ class NewFormationFormView(LoginRequiredMixin, FormView):
     model = Formation, Formateur
     template_name = 'formation/newFormationForm.html'
     form_class = NewFormationForm
-    success_url = '/formation/index'
+    success_url = '/formation/'
 
     def form_valid(self, form):
-        form.create_new_formation()
+        form.create_new_formation(self.request.user.formateur)
+        return super().form_valid(form)
+
+
+class NewSessionFormView(LoginRequiredMixin, FormView):
+    model = SessionFormation
+    template_name = 'formation/newSessionForm.html'
+    form_class = NewSessionForm
+
+
+class NewInscriptionFormView(LoginRequiredMixin, FormView):
+    model = Inscription
+    template_name = 'formation/newInscriptionForm.html'
+    form_class = NewInscriptionForm
+    success_url = '/formation/'
+
+    def form_valid(self, form):
+        form.create_new_inscription(self.request.user.formateur)
         return super().form_valid(form)
 
 
 class IndexView(generic.ListView):
-    template_name = 'formation/index.html'
+    template_name = 'formation/formationList.html'
     context_object_name = 'formation_list'
 
     def get_queryset(self):
         """Return all formation not close"""
+        # print(Formateur.objects.all().values('user__username', 'user_id'))
         return Formation.objects.all()
 
 
@@ -46,3 +63,22 @@ class DetailSessionView(generic.DetailView):
 
     def get_queryset(self):
         return SessionFormation.objects.all()
+
+
+class FormationListForFormateur(LoginRequiredMixin, generic.ListView):
+    model = Formation
+    template_name = "formation/formationList.html"
+    context_object_name = "formation_list"
+
+    def get_queryset(self):
+        return Formation.objects.filter(formateur__user=self.request.user)
+
+
+class InscriptionListForStudents(LoginRequiredMixin, generic.ListView):
+    template_name = 'formation/inscriptionList.html'
+    context_object_name = 'inscription_list'
+    model = Inscription
+
+    def get_queryset(self):
+        print(Inscription.objects.filter(student__user=self.request.user))
+        return Inscription.objects.filter(student__user=self.request.user)

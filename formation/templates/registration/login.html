@@ -1,7 +1,17 @@
-<p>
-    Login Form
-</p>
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Login">
-</form>
+{% extends 'formation/base.html' %}
+{% load bootstrap5 %}
+{% load static %}
+
+{% block content %}
+    <p>
+        Login Form
+    </p>
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="login">Login</button>
+        {% endbuttons %}
+    </form>
+
+{% endblock content %}

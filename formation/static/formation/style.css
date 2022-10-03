@@ -1,0 +1,9 @@
+nav {
+    background-color: darkgray;
+}
+nav div {
+    display: inline-block;
+}
+.login_div {
+    align-content: end;
+}

@@ -1,6 +1,10 @@
-<h1>Formation : {{ formation_detail.name }}</h1>
+{% extends 'formation/base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Formation : {{ formation_detail.name }}</h1>
 <p>Description : {{ formation_detail.description }}</p>
-<p> Formateur : {{ formation_detail.formateur }}</p>
+<p> Formateur : {{ formation_detail.formateur.name}}</p>
 <table>
     <tr>
         <th>Date</th>
@@ -11,11 +15,8 @@
         <tr>
             <td>
                 <a href="{% url 'formation:session_detail' session.id %}">
-                    {{ session.id }}
+                    {{ session.date }}
                 </a>
-            </td>
-            <td>
-                {{ session.date }}
             </td>
             <td>
                 {{ session.place }}
@@ -27,3 +28,5 @@
     {% endfor %}
 </table>
 <input type="button" value="Ajouter une nouvelle session"/>
+{% endblock content %}
+

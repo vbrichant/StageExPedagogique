@@ -1,1 +1,7 @@
-<h1> Formation : {{ Session_detail.formation.name }} </h1>
+{% extends 'formation/base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1> Formation : {{ Session_detail.formation.name }} </h1>
+{% endblock content %}
+

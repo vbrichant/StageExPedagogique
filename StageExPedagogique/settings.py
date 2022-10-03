@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'formation.apps.FormationConfig'
+    'formation.apps.FormationConfig',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [
