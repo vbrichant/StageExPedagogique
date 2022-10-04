@@ -9,7 +9,7 @@
                 <li><a href="{% url 'formation:formation_detail' formation.id %}"> {{ formation.name }}</a></li>
             {% endfor %}
         </ul>
-        <a href="{% url 'formation:newFormationForm' %}"> New Formation </a>
+        <button><a href="{% url 'formation:newFormationForm' %}"> New Formation </a></button>
     {% else %}
         <p>No formation are available</p>
     {% endif %}

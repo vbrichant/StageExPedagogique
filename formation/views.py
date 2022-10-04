@@ -24,6 +24,11 @@ class NewSessionFormView(LoginRequiredMixin, FormView):
     model = SessionFormation
     template_name = 'formation/newSessionForm.html'
     form_class = NewSessionForm
+    success_url = '/formation/'
+
+    def form_valid(self, form):
+        form.create_new_session()
+        return super().form_valid(form)
 
 
 class NewInscriptionFormView(LoginRequiredMixin, FormView):
@@ -33,7 +38,7 @@ class NewInscriptionFormView(LoginRequiredMixin, FormView):
     success_url = '/formation/'
 
     def form_valid(self, form):
-        form.create_new_inscription(self.request.user.formateur)
+        form.create_new_inscription(self.request.user.student)
         return super().form_valid(form)
 
 
@@ -80,5 +85,4 @@ class InscriptionListForStudents(LoginRequiredMixin, generic.ListView):
     model = Inscription
 
     def get_queryset(self):
-        print(Inscription.objects.filter(student__user=self.request.user))
         return Inscription.objects.filter(student__user=self.request.user)

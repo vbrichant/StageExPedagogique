@@ -27,6 +27,6 @@
         </tr>
     {% endfor %}
 </table>
-<input type="button" value="Ajouter une nouvelle session"/>
+    <button><a href="{% url 'formation:newSessionForm' formation_detail.id %}">Ajouter une nouvelle session</a></button>
 {% endblock content %}
 
