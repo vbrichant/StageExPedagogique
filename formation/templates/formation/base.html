@@ -8,9 +8,17 @@
     <div id="login_div">
         {% if user.is_authenticated %}
             <!-- Mes Formation (si Formateur) -->
-            <button><a href="{% url 'formation:formation_list_current_formateur' user.formateur.id %}"> Mes formation</a></button>
+            {% if user.formateur %}
+                <button><a href="{% url 'formation:formation_list_current_formateur' user.formateur.id %}"> Mes
+                    formation</a></button>
+            {% endif %}
+
             <!-- Mes Inscription (si Students) -->
-            <button><a href="{% url 'formation:formation_list_current_student' user.student.id %}"> Mes inscription</a></button>
+            {% if user.student %}
+                <button><a href="{% url 'formation:formation_list_current_student' user.student.id %}"> Mes inscription</a>
+            </button>
+            {% endif %}
+
             <!-- User Name (debug) -->
             <div> {{ user }}</div>
             <!-- Login Button -->

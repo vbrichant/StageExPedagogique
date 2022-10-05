@@ -1,11 +1,11 @@
 from django.contrib.auth import authenticate, login
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 
 # Create your views here.
 from .models import *
 from django.views import generic
 from formation.forms import *
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -34,12 +34,28 @@ class NewSessionFormView(LoginRequiredMixin, FormView):
 class NewInscriptionFormView(LoginRequiredMixin, FormView):
     model = Inscription
     template_name = 'formation/newInscriptionForm.html'
-    form_class = NewInscriptionForm
+    fields = ('session',)
     success_url = '/formation/'
+    form_class = NewInscriptionForm
 
     def form_valid(self, form):
-        form.create_new_inscription(self.request.user.student)
+        self.create_new_inscription(self.request.user.student, self.request)
         return super().form_valid(form)
+
+
+# Test de Select2
+class NewInscriptionCreateView(generic.CreateView):
+    template_name = 'formation/newInscriptionForm.html'
+    model = models.Formation
+    form_class = SessionInscriptionForm
+    success_url = "/"
+
+
+class NewInscriptionCreateView2(generic.CreateView):
+    template_name = 'formation/newInscriptionForm.html'
+    model = models.Formation
+    form_class = SessionInscriptionForm
+    success_url = "/"
 
 
 class IndexView(generic.ListView):
@@ -48,13 +64,12 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return all formation not close"""
-        # print(Formateur.objects.all().values('user__username', 'user_id'))
         return Formation.objects.all()
 
 
 class DetailFormationView(generic.DetailView):
     model = Formation
-    template_name = "formation/formation_detail.html"
+    template_name = "formation/formationDetail.html"
     context_object_name = "formation_detail"
 
     def get_queryset(self):
@@ -63,7 +78,7 @@ class DetailFormationView(generic.DetailView):
 
 class DetailSessionView(generic.DetailView):
     model = SessionFormation
-    template_name = "formation/session_detail.html"
+    template_name = "formation/sessionDetail.html"
     context_object_name = "Session_detail"
 
     def get_queryset(self):

@@ -3,7 +3,10 @@ import datetime
 
 from django import forms
 from django.utils import timezone
+from django_select2 import forms as s2forms
+from django_select2.forms import Select2Widget, ModelSelect2Widget
 
+from . import models
 from .models import Formateur, Formation, SessionFormation, Inscription
 
 
@@ -58,3 +61,51 @@ class NewInscriptionForm(forms.Form):
         data = self.cleaned_data
         new_inscription = Inscription(session=data["session_formation"], student=student)
         new_inscription.save()
+
+
+# Select2FromModels
+
+
+class FormationNameWidget(s2forms.ModelSelect2Widget):
+    search_fields = [
+        "name",
+    ]
+
+
+class SessionNameWidget(s2forms.ModelSelect2Widget):
+    autocomplete_fields = [
+        "session",
+    ]
+
+
+class SessionInscriptionForm2(forms.ModelForm):
+    class Meta:
+        model = SessionFormation
+        fields = "formation", "place"
+        widgets = {
+            "Formation": FormationNameWidget,
+            "Session": SessionNameWidget,
+        }
+        fields
+
+
+class SessionInscriptionForm(forms.Form):
+
+    formation = forms.ModelChoiceField(
+        queryset=Formation.objects.all(),
+        label="Formation",
+        widget=ModelSelect2Widget(
+            model=Formation,
+            select_fields=['name'],
+        )
+    )
+    session = forms.ModelChoiceField(
+        queryset=SessionFormation.objects.all(),
+        label="Session",
+        widget=ModelSelect2Widget(
+            model=SessionFormation,
+            select_fields=['formation'],
+            dependent_fields={'formation': 'formation'},
+            max_results=500,
+        )
+    )

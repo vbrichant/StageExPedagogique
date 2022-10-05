@@ -1,0 +1,48 @@
+{% extends 'formation/base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Formation : {{ formation_detail.name }}</h1>
+    <p>Description : {{ formation_detail.description }}</p>
+    <p> Formateur : {{ formation_detail.formateur.name }}</p>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Lieu</th>
+            <th>Nombre max d'élève</th>
+        </tr>
+        {% for session in formation_detail.sessionformation_set.all %}
+            <tr>
+                <td>
+                    <a href="{% url 'formation:session_detail' session.id %}">
+                        {{ session.date }}
+                    </a>
+                </td>
+                <td>
+                    {{ session.place }}
+                </td>
+                <td>
+                    {{ session.max_students }}
+                </td>
+            <!-- Si student => button pour s'inscrire a la session -->
+                {% if user.is_authenticated and user.student %}
+                    <td>
+                        <button><a href="{% url 'formation:newInscriptionForm' %}">S'inscrire</a></button>
+                    </td>
+                {% endif %}
+            <!-- Si formateur => button pour modifier la session -->
+                {% if user.is_authenticated and user.formateur %}
+                    <td>
+                        <button><a href="{% url 'formation:newInscriptionForm' %}">Modifier</a></button>
+                    </td>
+                {% endif %}
+
+            </tr>
+        {% endfor %}
+    </table>
+    {% if formation_detail.formateur.user == user %}
+        <button><a href="{% url 'formation:newSessionForm' formation_detail.id %}">Ajouter une nouvelle session</a>
+        </button>
+    {% endif %}
+{% endblock content %}
+

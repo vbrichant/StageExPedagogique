@@ -1,0 +1,15 @@
+{% extends 'formation/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+
+{% block content %}
+    {% if inscription_formation_list %}
+        <ul>
+            {% for formation in inscription_formation_list %}
+                <li><a href="{% url 'formation:newInscriptionSessionForm' formation.id %}"> {{ formation.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No formation are available</p>
+    {% endif %}
+{% endblock content %}

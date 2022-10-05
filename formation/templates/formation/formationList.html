@@ -9,7 +9,9 @@
                 <li><a href="{% url 'formation:formation_detail' formation.id %}"> {{ formation.name }}</a></li>
             {% endfor %}
         </ul>
-        <button><a href="{% url 'formation:newFormationForm' %}"> New Formation </a></button>
+        {% if user.formateur %}
+            <button><a href="{% url 'formation:newFormationForm' %}"> New Formation </a></button>
+        {% endif %}
     {% else %}
         <p>No formation are available</p>
     {% endif %}
