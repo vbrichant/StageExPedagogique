@@ -90,7 +90,6 @@ class SessionInscriptionForm2(forms.ModelForm):
 
 
 class SessionInscriptionForm(forms.Form):
-
     formation = forms.ModelChoiceField(
         queryset=Formation.objects.all(),
         label="Formation",
@@ -109,3 +108,6 @@ class SessionInscriptionForm(forms.Form):
             max_results=500,
         )
     )
+
+
+

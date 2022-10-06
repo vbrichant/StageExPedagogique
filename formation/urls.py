@@ -14,6 +14,7 @@ urlpatterns = [
     path('session/<int:pk>/', views.DetailSessionView.as_view(), name='session_detail'),
     path('newFormationForm/', views.NewFormationFormView.as_view(), name='newFormationForm'),
     path('newSessionForm/<int:pk>', views.NewSessionFormView.as_view(), name='newSessionForm'),
+    path('newInscription/session/<int:pk>/', views.inscription_session, name='inscriptionSession'),
     path('newInscriptionForm/', views.NewInscriptionFormView.as_view(), name='newInscriptionForm'),
     path('newTestInscriptionForm/', views.NewInscriptionCreateView.as_view(), name='newTestInscriptionForm'),
     path('newTestInscriptionForm2/', views.NewInscriptionCreateView.as_view(), name='newTestInscriptionForm2'),

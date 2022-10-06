@@ -3,5 +3,17 @@
 
 {% block content %}
     <h1> Formation : {{ Session_detail.formation.name }} </h1>
+    <h1> Formateur : {{ Session_detail.formation.formateur }} </h1>
+    <p> Date : {{ Session_detail.date }}</p>
+    <p> Lieux : {{ Session_detail.place }}</p>
+    <p> Nombre d'étudiant maximum : {{ Session_detail.max_students }}</p>
+    {% if user.student %}
+        <button><a href="{% url 'formation:inscriptionSession' Session_detail.id %}">S'inscrire la formation</a>
+        </button>
+    {% endif %}
+    {% if user.formateur %}
+        <button><a href="{% url 'formation:formation_list_current_student' user.student.id %}"> Modifier la session</a>
+        </button>
+    {% endif %}
 {% endblock content %}
 

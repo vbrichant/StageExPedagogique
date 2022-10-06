@@ -2,7 +2,6 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import get_object_or_404, render
 
 # Create your views here.
-from .models import *
 from django.views import generic
 from formation.forms import *
 from django.views.generic.edit import FormView, CreateView
@@ -101,3 +100,11 @@ class InscriptionListForStudents(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Inscription.objects.filter(student__user=self.request.user)
+
+
+def inscription_session(request, session_id):
+    print(request)
+    print(session_id)
+    new_inscription = Inscription(session=session_id, student=request.user.student)
+    print(new_inscription)
+    # new_inscription.save()
