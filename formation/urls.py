@@ -10,14 +10,29 @@ urlpatterns = [
     path('accounts/login/', auth_views.LoginView.as_view()),
     path('select2/', include('django_select2.urls')),
     # URL Formation APP
+
+    # Detail view
     path('formation/<int:pk>/', views.DetailFormationView.as_view(), name='formation_detail'),
     path('session/<int:pk>/', views.DetailSessionView.as_view(), name='session_detail'),
+
+    # New object form
     path('newFormationForm/', views.NewFormationFormView.as_view(), name='newFormationForm'),
     path('newSessionForm/<int:pk>', views.NewSessionFormView.as_view(), name='newSessionForm'),
-    path('newInscription/session/<int:pk>/', views.inscription_session, name='inscriptionSession'),
     path('newInscriptionForm/', views.NewInscriptionFormView.as_view(), name='newInscriptionForm'),
-    path('newTestInscriptionForm/', views.NewInscriptionCreateView.as_view(), name='newTestInscriptionForm'),
-    path('newTestInscriptionForm2/', views.NewInscriptionCreateView.as_view(), name='newTestInscriptionForm2'),
+
+    # Modification Object
+    path('formation/<int:pk>/update', views.UpdateFormationView.as_view(), name='updateFormation'),
+    path('formation/session/<int:pk>/update', views.UpdateSessionView.as_view(), name='updateSession'),
+
+    # Button Inscription/Desinscription
+    path('newInscription/session/<int:session_id>/', views.inscription_session, name='inscriptionSession'),
+    path('Desinscription/session/<int:session_id>/', views.desinscription_session, name='desinscriptionSession'),
+
+    # SuppressionFormation et SuppressionSession
+    path('formation/<int:pk>/delete', views.FormationDeleteView.as_view(), name='deleteFormation'),
+    path('formation/session/<int:pk>/delete', views.SessionDeleteView.as_view(), name='deleteSession'),
+
+    # NavBar
     path('formation/formateur/<int:pk>/', views.FormationListForFormateur.as_view(),
          name='formation_list_current_formateur'),
     path('formation/student/<int:pk>/', views.InscriptionListForStudents.as_view(),

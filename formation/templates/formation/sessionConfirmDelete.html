@@ -4,8 +4,11 @@
 
 {% block content %}
     <form method="post">{% csrf_token %}
-        {% bootstrap_form form %}
 
-        <input type="submit" value="Save formation">
+
+        <p>Are you sure you want to delete "{{ object }}"?</p>
+
+
+        <input type="submit" value="Confirm">
     </form>
 {% endblock content %}

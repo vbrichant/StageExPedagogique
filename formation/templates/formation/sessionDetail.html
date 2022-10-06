@@ -2,17 +2,23 @@
 {% load static %}
 
 {% block content %}
-    <h1> Formation : {{ Session_detail.formation.name }} </h1>
-    <h1> Formateur : {{ Session_detail.formation.formateur }} </h1>
-    <p> Date : {{ Session_detail.date }}</p>
-    <p> Lieux : {{ Session_detail.place }}</p>
-    <p> Nombre d'étudiant maximum : {{ Session_detail.max_students }}</p>
-    {% if user.student %}
-        <button><a href="{% url 'formation:inscriptionSession' Session_detail.id %}">S'inscrire la formation</a>
+    <h1> Formation : {{ session.formation.name }} </h1>
+    <h1> Formateur : {{ session.formation.formateur }} </h1>
+    <p> Date : {{ session.date }}</p>
+    <p> Lieux : {{ session.place }}</p>
+    <p> Nombre d'étudiant inscrit : {{ session.nbrs_inscription }}/{{ session.max_students }}</p>
+    {% if user.student.id in session.student_registered %}
+        <button><a href="{% url 'formation:desinscriptionSession' session.id %}">Se désinscrire</a>
         </button>
+    {% else %}
+        {% if user.student and session.nbrs_inscription < session.max_students %}
+            <button><a href="{% url 'formation:inscriptionSession' session.id %}">S'inscrire</a>
+            </button>
+        {% endif %}
     {% endif %}
-    {% if user.formateur %}
-        <button><a href="{% url 'formation:formation_list_current_student' user.student.id %}"> Modifier la session</a>
+
+    {% if user.formateur and session.formation.formateur == user.formateur%}
+        <button><a href="{% url 'formation:updateSession' pk=session.id %}"> Modifier la session</a>
         </button>
     {% endif %}
 {% endblock content %}

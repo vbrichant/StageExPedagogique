@@ -5,6 +5,7 @@ from django import forms
 from django.utils import timezone
 from django_select2 import forms as s2forms
 from django_select2.forms import Select2Widget, ModelSelect2Widget
+from django.shortcuts import get_object_or_404
 
 from . import models
 from .models import Formateur, Formation, SessionFormation, Inscription
@@ -17,12 +18,20 @@ def get_formateur_name():
     return formateur_list
 
 
-def get_formation_name():
+def get_formation_name_list():
     formation_list = Formation.objects.all()
     formation_list_name = []
     for formation in formation_list:
         formation_list_name.append((formation.id, formation.name))
     return formation_list_name
+
+
+def get_session_name_list():
+    session_list = SessionFormation.objects.all()
+    session_list_name = []
+    for session in session_list:
+        session_list_name.append((session.id, session))
+    return session_list_name
 
 
 class NewFormationForm(forms.Form):
@@ -37,9 +46,8 @@ class NewFormationForm(forms.Form):
 
 
 class NewSessionForm(forms.Form):
-    print()
-    get_formation_name()
-    formation_name = forms.ChoiceField(choices=get_formation_name())
+    get_formation_name_list()
+    formation_name = forms.ChoiceField(choices=get_formation_name_list())
     formation_place = forms.CharField(max_length=50)
     formation_date = forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M'],
                                          initial=timezone.now())
@@ -54,60 +62,25 @@ class NewSessionForm(forms.Form):
 
 
 class NewInscriptionForm(forms.Form):
-    formation_name = forms.ChoiceField(choices=get_formation_name())
-    session_formation = forms.ChoiceField()
+    session_formation = forms.ChoiceField(choices=get_session_name_list())
 
     def create_new_inscription(self, student):
         data = self.cleaned_data
-        new_inscription = Inscription(session=data["session_formation"], student=student)
+        session = get_object_or_404(SessionFormation, id=data["session_formation"])
+        print(data["session_formation"])
+        print(session)
+
+        new_inscription = Inscription(session=session, student=student)
         new_inscription.save()
 
 
-# Select2FromModels
+class ModificationSessionForm(forms.Form):
+    pass
 
 
-class FormationNameWidget(s2forms.ModelSelect2Widget):
-    search_fields = [
-        "name",
-    ]
+class ModificationInscriptionForm(forms.Form):
+    pass
 
 
-class SessionNameWidget(s2forms.ModelSelect2Widget):
-    autocomplete_fields = [
-        "session",
-    ]
-
-
-class SessionInscriptionForm2(forms.ModelForm):
-    class Meta:
-        model = SessionFormation
-        fields = "formation", "place"
-        widgets = {
-            "Formation": FormationNameWidget,
-            "Session": SessionNameWidget,
-        }
-        fields
-
-
-class SessionInscriptionForm(forms.Form):
-    formation = forms.ModelChoiceField(
-        queryset=Formation.objects.all(),
-        label="Formation",
-        widget=ModelSelect2Widget(
-            model=Formation,
-            select_fields=['name'],
-        )
-    )
-    session = forms.ModelChoiceField(
-        queryset=SessionFormation.objects.all(),
-        label="Session",
-        widget=ModelSelect2Widget(
-            model=SessionFormation,
-            select_fields=['formation'],
-            dependent_fields={'formation': 'formation'},
-            max_results=500,
-        )
-    )
-
-
-
+class ModificationFormationForm(forms.Form):
+    pass

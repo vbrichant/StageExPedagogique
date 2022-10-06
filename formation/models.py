@@ -43,6 +43,16 @@ class SessionFormation(models.Model):
     def __str__(self):
         return self.formation.name + " " + str(self.date)
 
+    def nbrs_inscription(self):
+        return self.inscription_set.count()
+
+    def student_registered(self):
+        inscription_list = self.inscription_set.values_list("student", flat=True)
+        student_list = []
+        for inscription in inscription_list:
+            student_list.append(int(inscription))
+        return inscription_list
+
 
 class Inscription(models.Model):
     session = models.ForeignKey(SessionFormation, on_delete=models.CASCADE)
