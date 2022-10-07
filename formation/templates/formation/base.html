@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="{% static 'formation/style.css' %}">
 <nav>
     <div><a href="{% url 'formation:index' %}">Formation</a></div>
+    <div><a href="{% url 'formation:calendar' %}">Calendrier</a></div>
     <div id="login_div">
         {% if user.is_authenticated %}
             <!-- Mes Formation (si Formateur) -->
