@@ -1,3 +1,4 @@
+from django.template.defaulttags import url
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
@@ -31,6 +32,9 @@ urlpatterns = [
     # SuppressionFormation et SuppressionSession
     path('formation/<int:pk>/delete', views.FormationDeleteView.as_view(), name='deleteFormation'),
     path('formation/session/<int:pk>/delete', views.SessionDeleteView.as_view(), name='deleteSession'),
+
+    # Calendar
+    path('calendar/', views.CalendarView.as_view(), name='calendar'),
 
     # NavBar
     path('formation/formateur/<int:pk>/', views.FormationListForFormateur.as_view(),

@@ -1,13 +1,18 @@
+from datetime import date
+
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 # Create your views here.
 from django.views import generic
 from formation.forms import *
 from django.views.generic.edit import FormView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+from formation.utils import Calendar
 
 
 ##
@@ -149,13 +154,29 @@ class SessionDeleteView(generic.edit.DeleteView):
     template_name = "formation/sessionConfirmDelete.html"
 
 
-def suppression_formation(formation_id):
-    formation_object = get_object_or_404(Formation, pk=formation_id)
-    formation_object.delete()
-    # return HttpResponseRedirect(reverse('formation:formation_list_current_student', args=(student.id,)))
+##
+# Calendrier
+##
+
+class CalendarView(generic.ListView):
+    model = SessionFormation
+    template_name = 'formation/calendar.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # use today's date for the calendar
+        d = get_date(self.request.GET.get('day', None))
+        # Instantiate our calendar class with today's year and date
+        cal = Calendar()
+        # Call the formatmonth method, which returns our calendar as a table
+        html_cal = cal.formatmonth(theyear=d.year, themonth=d.month, withyear=True)
+        context['calendar'] = mark_safe(html_cal)
+        return context
 
 
-def suppression_session(session_id):
-    print(session_id)
-    session_object = get_object_or_404(SessionFormation, pk=session_id)
-    session_object.delete()
+def get_date(req_day):
+    if req_day:
+        year, month = (int(x) for x in req_day.split('-'))
+        return date(year, month, day=1)
+    return datetime.date.today()

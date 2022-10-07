@@ -2,9 +2,8 @@ import contextvars
 import datetime
 
 from django import forms
+from calendar import HTMLCalendar
 from django.utils import timezone
-from django_select2 import forms as s2forms
-from django_select2.forms import Select2Widget, ModelSelect2Widget
 from django.shortcuts import get_object_or_404
 
 from . import models

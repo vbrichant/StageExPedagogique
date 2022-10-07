@@ -1,17 +1,4 @@
-nav {
-    background-color: darkgray;
-}
-nav div {
-    display: inline-block;
-}
-.login_div {
-    align-content: end;
-}
-td , th{
-    border: 1px solid black;
-}
-
-/* Calendar Style */
+/* cal/static/cal/css/styles.css */
 
 .calendar {
   width: 70%;
