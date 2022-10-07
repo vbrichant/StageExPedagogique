@@ -1,5 +1,8 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 
 # Create your models here.
@@ -52,6 +55,11 @@ class SessionFormation(models.Model):
         for inscription in inscription_list:
             student_list.append(int(inscription))
         return inscription_list
+
+    def is_open(self):
+        now = timezone.now()
+        today = datetime.datetime.now()
+        return self.date > now
 
 
 class Inscription(models.Model):
