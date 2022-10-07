@@ -6,12 +6,12 @@
     <h1> Formateur : {{ session.formation.formateur }} </h1>
     <p> Date : {{ session.date }}</p>
     <p> Lieux : {{ session.place }}</p>
-    <p> Nombre d'étudiant inscrit : {{ session.nbrs_inscription }}/{{ session.max_students }}</p>
-    {% if user.student.id in session.student_registered %}
+    <p> Nombre d'étudiant inscrit : {{ session.get_count_inscription }}/{{ session.max_students }}</p>
+    {% if user.student.id in session.is_student_registered %}
         <button><a href="{% url 'formation:desinscriptionSession' session.id %}">Se désinscrire</a>
         </button>
     {% else %}
-        {% if user.student and session.nbrs_inscription < session.max_students %}
+        {% if user.student and session.get_count_inscription < session.max_students %}
             <button><a href="{% url 'formation:inscriptionSession' session.id %}">S'inscrire</a>
             </button>
         {% endif %}

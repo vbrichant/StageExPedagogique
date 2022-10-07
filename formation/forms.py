@@ -13,7 +13,7 @@ from .models import Formateur, Formation, SessionFormation, Inscription
 def get_formateur_name():
     formateur_list = []
     for formateur in Formateur.objects.all():
-        formateur_list.append(formateur.name)
+        formateur_list.append(formateur.get_name)
     return formateur_list
 
 

@@ -4,7 +4,7 @@
 {% block content %}
     <h1>Formation : {{ formation.name }} </h1>
     <p>Description : {{ formation.description }}</p>
-    <p> Formateur : {{ formation.formateur.name }}</p>
+    <p> Formateur : {{ formation.formateur.get_name }}</p>
     <table>
         <tr>
             <th>Date</th>
@@ -24,12 +24,12 @@
                         {{ session.place }}
                     </td>
                     <td>
-                        {{ session.nbrs_inscription }}/{{ session.max_students }}
+                        {{ session.get_count_inscription }}/{{ session.max_students }}
                     </td>
                     <!-- Si student => button pour s'inscrire a la session -->
-                    {% if user.is_authenticated and user.student and session.nbrs_inscription < session.max_students %}
+                    {% if user.is_authenticated and user.student and session.get_count_inscription < session.max_students %}
                         <!-- Si student pas inscrit => button "S'inscrire"-->
-                        {% if user.student.id not in session.student_registered %}
+                        {% if user.student.id not in session.is_student_registered %}
                             <td>
                                 <button><a href="{% url 'formation:inscriptionSession' session.id %}">S'inscrire</a>
                                 </button>
