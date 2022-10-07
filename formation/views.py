@@ -84,7 +84,7 @@ class DetailSessionView(generic.DetailView):
 ##
 # ListView
 ##
-class FormationListForFormateur(LoginRequiredMixin, generic.ListView):
+class FormationListForFormateurView(LoginRequiredMixin, generic.ListView):
     model = Formation
     template_name = "formation/formationList.html"
     context_object_name = "formation_list"
@@ -93,7 +93,7 @@ class FormationListForFormateur(LoginRequiredMixin, generic.ListView):
         return Formation.objects.filter(formateur__user=self.request.user)
 
 
-class InscriptionListForStudents(LoginRequiredMixin, generic.ListView):
+class InscriptionListForStudentsView(LoginRequiredMixin, generic.ListView):
     template_name = 'formation/inscriptionList.html'
     context_object_name = 'inscription_list'
     model = Inscription
@@ -168,10 +168,10 @@ class CalendarView(generic.ListView):
         # use today's date for the calendar
         d = get_date(self.request.GET.get('day', None))
         # Instantiate our calendar class with today's year and date
-        cal = Calendar()
+        calendar = Calendar()
         # Call the formatmonth method, which returns our calendar as a table
-        html_cal = cal.formatmonth(theyear=d.year, themonth=d.month, withyear=True)
-        context['calendar'] = mark_safe(html_cal)
+        html_calendar = calendar.formatmonth(theyear=d.year, themonth=d.month, withyear=True)
+        context['calendar'] = mark_safe(html_calendar)
         return context
 
 

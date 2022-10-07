@@ -13,7 +13,7 @@ class Formateur(models.Model):
     def __str__(self):
         return self.user.username.replace("_", " ")
 
-    def name(self):
+    def get_name(self):
         return self.user.username.replace("_", " ")
 
 
@@ -24,7 +24,7 @@ class Student(models.Model):
     def __str__(self):
         return self.user.username.replace("_", " ")
 
-    def name(self):
+    def get_name(self):
         return self.user.username.replace("_", " ")
 
 
@@ -46,10 +46,10 @@ class SessionFormation(models.Model):
     def __str__(self):
         return self.formation.name + " " + str(self.date)
 
-    def nbrs_inscription(self):
+    def get_count_inscription(self):
         return self.inscription_set.count()
 
-    def student_registered(self):
+    def is_student_registered(self):
         inscription_list = self.inscription_set.values_list("student", flat=True)
         student_list = []
         for inscription in inscription_list:

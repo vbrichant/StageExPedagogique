@@ -37,8 +37,8 @@ urlpatterns = [
     path('calendar/', views.CalendarView.as_view(), name='calendar'),
 
     # NavBar
-    path('formation/formateur/<int:pk>/', views.FormationListForFormateur.as_view(),
+    path('formation/formateur/<int:pk>/', views.FormationListForFormateurView.as_view(),
          name='formation_list_current_formateur'),
-    path('formation/student/<int:pk>/', views.InscriptionListForStudents.as_view(),
+    path('formation/student/<int:pk>/', views.InscriptionListForStudentsView.as_view(),
          name='formation_list_current_student'),
 ]
