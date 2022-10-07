@@ -43,7 +43,7 @@ td , th{
   font-size: 16px;
 }
 
-ul {
+.days_list ul {
   height: 100%;
   padding: 0px 5px 0px 20px;
 }
