@@ -51,7 +51,7 @@ class NewInscriptionFormView(LoginRequiredMixin, FormView):
         return super().form_valid(form)
 
 
-class IndexView(generic.ListView):
+class FormationListView(generic.ListView):
     template_name = 'formation/formationList.html'
     context_object_name = 'formation_list'
 
@@ -142,13 +142,13 @@ def desinscription_session(request, session_id):
 ##
 # Suppression (Formation et Session)
 ##
-class FormationDeleteView(generic.edit.DeleteView):
+class FormationDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
     model = Formation
     success_url = "/formation/"
     template_name = "formation/formationConfirmDelete.html"
 
 
-class SessionDeleteView(generic.edit.DeleteView):
+class SessionDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
     model = SessionFormation
     success_url = "/formation/"
     template_name = "formation/sessionConfirmDelete.html"

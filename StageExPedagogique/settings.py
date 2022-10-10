@@ -27,6 +27,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = "/formation/"
+LOGOUT_REDIRECT_URL = "/formation/"
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'formation.apps.FormationConfig',
-    'bootstrap5',
+    'bootstrap3',
     'django_select2',
 ]
 

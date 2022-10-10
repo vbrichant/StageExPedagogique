@@ -6,7 +6,7 @@ from . import views
 
 app_name = 'formation'
 urlpatterns = [
-    path('', views.IndexView.as_view(), name='index'),
+    path('', views.FormationListView.as_view(), name='formation_list'),
     # path('accounts/login/', views.LoginView.as_view(), name='login'),
     path('accounts/login/', auth_views.LoginView.as_view()),
     path('select2/', include('django_select2.urls')),
@@ -40,5 +40,5 @@ urlpatterns = [
     path('formation/formateur/<int:pk>/', views.FormationListForFormateurView.as_view(),
          name='formation_list_current_formateur'),
     path('formation/student/<int:pk>/', views.InscriptionListForStudentsView.as_view(),
-         name='formation_list_current_student'),
+         name='inscription_list_current_student'),
 ]

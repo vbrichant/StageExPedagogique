@@ -1,49 +1,60 @@
 nav {
     background-color: darkgray;
+    padding: 10px;
 }
+
 nav div {
     display: inline-block;
 }
-.login_div {
-    align-content: end;
+
+.logout_button, .login_button {
+    position: absolute;
+    right: 5em;
+    top: 0.5em;
 }
-td , th{
+
+td, th {
     border: 1px solid black;
+}
+
+
+.block_content div {
+    margin-inline: 10px;
 }
 
 /* Calendar Style */
 
 .calendar {
-  width: 70%;
-  margin: auto;
-  font-size: 13px;
+    width: 70%;
+    margin: auto;
+    font-size: 13px;
 }
 
 .calendar tr, .calendar td {
-  border: 1px solid black;
+    border: 1px solid black;
 }
 
 .calendar th {
-  padding: 10px;
-  text-align: center;
-  font-size: 18px;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
 }
 
 .calendar td {
-  width: 200px;
-  height: 100px;
-  padding: 20px 0px 0px 5px;
+    width: 200px;
+    height: 100px;
+    padding: 20px 0px 0px 5px;
 }
 
 .month {
-  font-size: 25px;
+    font-size: 25px;
 }
 
 .date {
-  font-size: 16px;
+    font-size: 16px;
 }
 
 .days_list ul {
-  height: 100%;
-  padding: 0px 5px 0px 20px;
+    height: 100%;
+    padding: 0px 5px 0px 20px;
 }
