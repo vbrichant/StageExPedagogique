@@ -1,33 +1,46 @@
-{% load bootstrap5 %}
+{% load bootstrap3 %}
 {% load static %}
 {% bootstrap_css %}
-{% bootstrap_javascript %}
+{% bootstrap_javascript jquery=1 %}
 <link rel="stylesheet" href="{% static 'formation/style.css' %}">
-<nav>
-    <div><a href="{% url 'formation:index' %}">Formation</a></div>
-    <div><a href="{% url 'formation:calendar' %}">Calendrier</a></div>
-    <div id="login_div">
+<nav class="navigation_bar">
+    <div class="formation_list_link">
+        <a href="{% url 'formation:formation_list' %}">Formation</a>
+    </div>
+    <div class="calendar_link">
+        <a href="{% url 'formation:calendar' %}">Calendrier</a>
+    </div>
+    <div id="authenticated_div">
         {% if user.is_authenticated %}
+
             <!-- Mes Formation (si Formateur) -->
             {% if user.formateur %}
-                <button><a href="{% url 'formation:formation_list_current_formateur' user.formateur.id %}"> Mes
-                    formation</a></button>
+                <button class="formation_current_user_list_link">
+                    <a href="{% url 'formation:formation_list_current_formateur' user.formateur.id %}">
+                        Mes formation
+                    </a>
+                </button>
             {% endif %}
 
             <!-- Mes Inscription (si Students) -->
             {% if user.student %}
-                <button><a href="{% url 'formation:formation_list_current_student' user.student.id %}"> Mes inscription</a>
-            </button>
+                <button class="inscription_current_user_list_link">
+                    <a href="{% url 'formation:formation_list_current_student' user.student.id %}">
+                        Mes inscription
+                    </a>
+                </button>
             {% endif %}
 
             <!-- User Name (debug) -->
             <div> {{ user }}</div>
             <!-- Login Button -->
-            <button><a href="{% url 'logout' %}">Logout</a></button>
+            <button class="logout_button"><a href="{% url 'logout' %}">Logout</a></button>
         {% else %}
-            <button><a href="{% url 'login' %}">Login</a></button>
+            <button class="login_button"><a href="{% url 'login' %}">Login</a></button>
         {% endif %}
     </div>
 </nav>
-{% block content %}
-{% endblock content %}
+<div class="block_content">
+    {% block content %}
+    {% endblock content %}
+</div>

@@ -2,69 +2,77 @@
 {% load static %}
 
 {% block content %}
-    <h1>Formation : {{ formation.name }} </h1>
-    <p>Description : {{ formation.description }}</p>
-    <p> Formateur : {{ formation.formateur.get_name }}</p>
-    <table>
-        <tr>
-            <th>Date</th>
-            <th>Lieu</th>
-            <th>Nombre d'élèves inscrit</th>
-        </tr>
-        {% for session in formation.sessionformation_set.all %}
-            {% if session.is_open %}
-
+    <div class="formation_detail">
+        <div class="description_formation">
+            <h1 class="formation_title">Formation : {{ formation.name }} </h1>
+            <p>Description : {{ formation.description }}</p>
+            <p> Formateur : {{ formation.formateur.get_name }}</p>
+        </div>
+        <div class="formation_session_table">
+            <table>
                 <tr>
-                    <td>
-                        <a href="{% url 'formation:session_detail' session.id %}">
-                            {{ session.date }}
-                        </a>
-                    </td>
-                    <td>
-                        {{ session.place }}
-                    </td>
-                    <td>
-                        {{ session.get_count_inscription }}/{{ session.max_students }}
-                    </td>
-                    <!-- Si student => button pour s'inscrire a la session -->
-                    {% if user.is_authenticated and user.student and session.get_count_inscription < session.max_students %}
-                        <!-- Si student pas inscrit => button "S'inscrire"-->
-                        {% if user.student.id not in session.is_student_registered %}
-                            <td>
-                                <button><a href="{% url 'formation:inscriptionSession' session.id %}">S'inscrire</a>
-                                </button>
-                            </td>
-                        {% else %}
-                            <!-- Si student inscrit => button "Se désinscrire"-->
-                            <td>
-                                <button><a href="{% url 'formation:desinscriptionSession' session.id %}">Se
-                                    désinscrire</a>
-                                </button>
-                            </td>
-                        {% endif %}
-                    {% endif %}
-                    <!-- Si formateur => buttons pour modifier et supprimer la session -->
-                    {% if user.is_authenticated and session.formation.formateur == user.formateur %}
-                        <td>
-                            <button><a href="{% url 'formation:updateSession' session.id %}">Modifier</a></button>
-                        </td>
-                        <td>
-                            <button><a href="{% url 'formation:deleteSession' session.id %}">Supprimer</a></button>
-                        </td>
-                    {% endif %}
+                    <th>Date</th>
+                    <th>Lieu</th>
+                    <th>Nombre d'élèves inscrit</th>
                 </tr>
-            {% endif %}
-        {% endfor %}
-    </table>
-    {% if formation.formateur.user == user %}
-        <button><a href="{% url 'formation:newSessionForm' formation.id %}">
-            Ajouter une nouvelle session
-        </a></button>
-        <button><a href="{% url 'formation:updateFormation' formation.id %}">
-            Modifier la formation
-        </a></button>
-        <button><a href="{% url 'formation:deleteFormation' pk=formation.id %}">
-            Supprimer la formation
-        </a></button>
-    {% endif %}
+                {% for session in formation.sessionformation_set.all %}
+                    {% if session.is_open %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'formation:session_detail' session.id %}">
+                                    {{ session.date }}
+                                </a>
+                            </td>
+                            <td>
+                                {{ session.place }}
+                            </td>
+                            <td>
+                                {{ session.get_count_inscription }}/{{ session.max_students }}
+                            </td>
+                            <!-- Si student => button pour s'inscrire a la session -->
+                            {% if user.is_authenticated and user.student and session.get_count_inscription < session.max_students %}
+                                <!-- Si student pas inscrit => button "S'inscrire"-->
+                                {% if user.student.id not in session.is_student_registered %}
+                                    <td>
+                                        <button><a
+                                                href="{% url 'formation:inscriptionSession' session.id %}">S'inscrire</a>
+                                        </button>
+                                    </td>
+                                {% else %}
+                                    <!-- Si student inscrit => button "Se désinscrire"-->
+                                    <td>
+                                        <button><a href="{% url 'formation:desinscriptionSession' session.id %}">Se
+                                            désinscrire</a>
+                                        </button>
+                                    </td>
+                                {% endif %}
+                            {% endif %}
+                            <!-- Si formateur => buttons pour modifier et supprimer la session -->
+                            {% if user.is_authenticated and session.formation.formateur == user.formateur %}
+                                <td>
+                                    <button><a href="{% url 'formation:updateSession' session.id %}">Modifier</a>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button><a href="{% url 'formation:deleteSession' session.id %}">Supprimer</a>
+                                    </button>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        {% if formation.formateur.user == user %}
+            <button><a href="{% url 'formation:newSessionForm' formation.id %}">
+                Ajouter une nouvelle session
+            </a></button>
+            <button><a href="{% url 'formation:updateFormation' formation.id %}">
+                Modifier la formation
+            </a></button>
+            <button><a href="{% url 'formation:deleteFormation' pk=formation.id %}">
+                Supprimer la formation
+            </a></button>
+        {% endif %}
+    </div>
 {% endblock content %}

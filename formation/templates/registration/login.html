@@ -1,17 +1,16 @@
 {% extends 'formation/base.html' %}
-{% load bootstrap5 %}
+{% load bootstrap3 %}
 {% load static %}
 
 {% block content %}
-    <p>
-        Login Form
-    </p>
-    <form method="post">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        {% buttons %}
-            <button type="submit" class="login">Login</button>
-        {% endbuttons %}
-    </form>
-
+    <h1>Connexion : </h1>
+    <div class="login_form">
+        <form method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                <button type="submit" class="login_submit_button">Login</button>
+            {% endbuttons %}
+        </form>
+    </div>
 {% endblock content %}

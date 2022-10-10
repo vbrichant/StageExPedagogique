@@ -1,11 +1,11 @@
-<!-- A faire  -->
 {% extends 'formation/base.html' %}
 {% load static %}
-{% load bootstrap5 %}
+{% load bootstrap3 %}
 {% block content %}
-    <form method="post">{% csrf_token %}
-        {% bootstrap_form form %}
-
-        <input type="submit" value="Save session">
-    </form>
+    <div class="new_session_form">
+        <form method="post">{% csrf_token %}
+            {% bootstrap_form form %}
+            <input type="submit" value="Save session">
+        </form>
+    </div>
 {% endblock content %}
