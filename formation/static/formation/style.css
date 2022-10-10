@@ -1,14 +1,24 @@
 nav {
     background-color: darkgray;
+    padding: 10px;
 }
 nav div {
     display: inline-block;
+}
+.logout_button, .login_button{
+    position: absolute;
+    right: 5em;
+    top: 0.5em;
 }
 .login_div {
     align-content: end;
 }
 td , th{
     border: 1px solid black;
+}
+
+.block_content div{
+    margin-inline: 10px;
 }
 
 /* Calendar Style */

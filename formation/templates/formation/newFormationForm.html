@@ -1,11 +1,13 @@
 {% extends 'formation/base.html' %}
-{% load bootstrap5 %}
+{% load bootstrap3 %}
 {% load static %}
 
 {% block content %}
-    <form method="post">{% csrf_token %}
-        {% bootstrap_form form %}
+    <div class="new_formation_form">
+        <form method="post">{% csrf_token %}
+            {% bootstrap_form form %}
 
-        <input type="submit" value="Save formation">
-    </form>
+            <input type="submit" value="Save formation">
+        </form>
+    </div>
 {% endblock content %}

@@ -18,6 +18,8 @@ class Formateur(models.Model):
 
 
 class Student(models.Model):
+    class Meta:
+        permissions = [('can_create_inscription', 'can')]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     matricule = models.CharField(max_length=20, default=0)
 
