@@ -9,8 +9,8 @@ from django.utils.safestring import mark_safe
 # Create your views here.
 from django.views import generic
 from formation.forms import *
-from django.views.generic.edit import FormView, CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import FormView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from formation.utils import Calendar
 
@@ -18,7 +18,8 @@ from formation.utils import Calendar
 ##
 # FormView
 ##
-class NewFormationFormView(LoginRequiredMixin, FormView):
+class NewFormationFormView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
+    permission_required = 'formation.formation.can_add_formation'
     model = Formation, Formateur
     template_name = 'formation/newFormationForm.html'
     form_class = NewFormationForm
@@ -29,7 +30,8 @@ class NewFormationFormView(LoginRequiredMixin, FormView):
         return super().form_valid(form)
 
 
-class NewSessionFormView(LoginRequiredMixin, FormView):
+class NewSessionFormView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
+    permission_required = 'formation.session.can_add_session'
     model = SessionFormation
     template_name = 'formation/newSessionForm.html'
     form_class = NewSessionForm
@@ -40,7 +42,8 @@ class NewSessionFormView(LoginRequiredMixin, FormView):
         return super().form_valid(form)
 
 
-class NewInscriptionFormView(LoginRequiredMixin, FormView):
+class NewInscriptionFormView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
+    permission_required = 'formation.inscription.can_add_inscription'
     model = Inscription
     template_name = 'formation/newInscriptionForm.html'
     success_url = '/formation/'
@@ -127,7 +130,7 @@ def inscription_session(request, session_id):
     user = request.user
     new_inscription = Inscription(session=session, student=user.student)
     new_inscription.save()
-    return HttpResponseRedirect(reverse('formation:formation_list_current_student', args=(user.student.id,)))
+    return HttpResponseRedirect(reverse('formation:inscription_list_current_student', args=(user.student.id,)))
 
 
 def desinscription_session(request, session_id):
@@ -136,7 +139,7 @@ def desinscription_session(request, session_id):
     inscription = get_object_or_404(Inscription, session=session, student=student)
     print(inscription)
     inscription.delete()
-    return HttpResponseRedirect(reverse('formation:formation_list_current_student', args=(student.id,)))
+    return HttpResponseRedirect(reverse('formation:inscription_list_current_student', args=(student.id,)))
 
 
 ##

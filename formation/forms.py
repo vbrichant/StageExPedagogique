@@ -77,9 +77,5 @@ class ModificationSessionForm(forms.Form):
     pass
 
 
-class ModificationInscriptionForm(forms.Form):
-    pass
-
-
 class ModificationFormationForm(forms.Form):
     pass
