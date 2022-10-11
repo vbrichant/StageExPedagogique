@@ -42,15 +42,15 @@ class NewSessionFormView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
         return super().form_valid(form)
 
 
-class NewInscriptionFormView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
+class NewRegistrationFormView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
     permission_required = 'formation.add_inscription'
     model = Inscription
-    template_name = 'formation/newInscriptionForm.html'
+    template_name = 'formation/newRegistrationForm.html'
     success_url = '/formation/'
-    form_class = NewInscriptionForm
+    form_class = NewRegistrationForm
 
     def form_valid(self, form):
-        form.create_new_inscription(self.request.user.student)
+        form.create_new_registration(self.request.user.student)
         return super().form_valid(form)
 
 
@@ -79,7 +79,7 @@ class DetailSessionView(generic.DetailView):
 # ListView
 ##
 class FormationListView(generic.ListView):
-    template_name = 'formation/formationList.html'
+    template_name = 'formation/index.html'
     context_object_name = 'formation_list'
 
     def get_queryset(self):
@@ -96,9 +96,9 @@ class FormationListForFormateurView(LoginRequiredMixin, generic.ListView):
         return Formation.objects.filter(formateur__user=self.request.user)
 
 
-class InscriptionListForStudentsView(LoginRequiredMixin, generic.ListView):
-    template_name = 'formation/inscriptionList.html'
-    context_object_name = 'inscription_list'
+class RegistrationListForStudentsView(LoginRequiredMixin, generic.ListView):
+    template_name = 'formation/registrationList.html'
+    context_object_name = 'registration_list'
     model = Inscription
 
     def get_queryset(self):
@@ -146,7 +146,7 @@ class SessionDeleteView(LoginRequiredMixin, PermissionRequiredMixin, generic.edi
 ###
 @login_required
 @permission_required('formation.add_inscription', raise_exception=True)
-def inscription_session(request, session_id):
+def registration_session(request, session_id):
     session = get_object_or_404(SessionFormation, pk=session_id)
     user = request.user
     new_inscription = Inscription(session=session, student=user.student)
@@ -156,7 +156,7 @@ def inscription_session(request, session_id):
 
 @login_required
 @permission_required('formation.add_inscription', raise_exception=True)
-def desinscription_session(request, session_id):
+def cancel_registration_session(request, session_id):
     session = get_object_or_404(SessionFormation, pk=session_id)
     student = request.user.student
     inscription = get_object_or_404(Inscription, session=session, student=student)

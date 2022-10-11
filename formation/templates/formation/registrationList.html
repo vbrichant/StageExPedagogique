@@ -3,10 +3,11 @@
 {% load bootstrap3 %}
 
 {% block content %}
-    <div class="inscription_list_div">
-        {% if inscription_list %}
+    <div class="registration_list_div">
+        <h1>Liste de vos inscription à des formations</h1>
+        {% if registration_list %}
             <ul>
-                {% for inscription in inscription_list %}
+                {% for inscription in registration_list %}
                     <li>
                         <a href="{% url 'formation:session_detail' inscription.session.id %}"> {{ inscription.session.formation.name }}</a>
                     </li>
@@ -16,6 +17,6 @@
         {% else %}
             <p>Aucune inscription disponible</p>
         {% endif %}
-        <button><a href="{% url 'formation:newInscriptionForm' %}"> Créer une nouvelle inscription </a></button>
+        <button><a href="{% url 'formation:newRegistrationForm' %}"> Créer une nouvelle inscription </a></button>
     </div>
 {% endblock content %}

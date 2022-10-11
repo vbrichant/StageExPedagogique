@@ -19,15 +19,16 @@ urlpatterns = [
     # New object form
     path('newFormationForm/', views.NewFormationFormView.as_view(), name='newFormationForm'),
     path('newSessionForm/<int:pk>', views.NewSessionFormView.as_view(), name='newSessionForm'),
-    path('newInscriptionForm/', views.NewInscriptionFormView.as_view(), name='newInscriptionForm'),
+    path('newRegistrationForm/', views.NewRegistrationFormView.as_view(), name='newRegistrationForm'),
 
     # Modification Object
     path('formation/<int:pk>/update', views.UpdateFormationView.as_view(), name='updateFormation'),
     path('formation/session/<int:pk>/update', views.UpdateSessionView.as_view(), name='updateSession'),
 
     # Button Inscription/Desinscription
-    path('newInscription/session/<int:session_id>/', views.inscription_session, name='inscriptionSession'),
-    path('Desinscription/session/<int:session_id>/', views.desinscription_session, name='desinscriptionSession'),
+    path('newRegistration/session/<int:session_id>/', views.registration_session, name='registrationSession'),
+    path('cancelRegistration/session/<int:session_id>/', views.cancel_registration_session,
+         name='cancelRegistrationSession'),
 
     # SuppressionFormation et SuppressionSession
     path('formation/<int:pk>/delete', views.FormationDeleteView.as_view(), name='deleteFormation'),
@@ -39,7 +40,7 @@ urlpatterns = [
     # NavBar
     path('formation/formateur/<int:pk>/', views.FormationListForFormateurView.as_view(),
          name='formation_list_current_formateur'),
-    path('formation/student/<int:pk>/', views.InscriptionListForStudentsView.as_view(),
+    path('formation/student/<int:pk>/', views.RegistrationListForStudentsView.as_view(),
          name='inscription_list_current_student'),
 
     # graph_models

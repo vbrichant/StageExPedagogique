@@ -42,19 +42,19 @@
                             {{ session.get_count_inscription }}/{{ session.max_students }}
                         </td>
                         <!-- Si student => button pour s'inscrire a la session -->
-                        {% if user.is_authenticated and user.student and session.get_count_inscription < session.max_students %}
+                        {% if user.is_authenticated and user.student and session.get_count_registration < session.max_students %}
                             <!-- Si student pas inscrit => button "S'inscrire"-->
                             {% if user.student.id not in session.is_student_registered %}
                                 <td>
-                                    <button class="inscription_button"><a
-                                            href="{% url 'formation:inscriptionSession' session.id %}">S'inscrire</a>
+                                    <button class="registration_button"><a
+                                            href="{% url 'formation:registrationSession' session.id %}">S'inscrire</a>
                                     </button>
                                 </td>
                             {% else %}
                                 <!-- Si student inscrit => button "Se désinscrire"-->
                                 <td>
-                                    <button class="desinscription_button"><a
-                                            href="{% url 'formation:desinscriptionSession' session.id %}">Se
+                                    <button class="cancel_registration_button"><a
+                                            href="{% url 'formation:cancelRegistrationSession' session.id %}">Se
                                         désinscrire</a>
                                     </button>
                                 </td>
