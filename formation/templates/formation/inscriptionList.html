@@ -12,9 +12,10 @@
                     </li>
                 {% endfor %}
             </ul>
-            <button><a href="{% url 'formation:newInscriptionForm' %}"> New Inscription </a></button>
+
         {% else %}
-            <p>No formation are available</p>
+            <p>Aucune inscription disponible</p>
         {% endif %}
+        <button><a href="{% url 'formation:newInscriptionForm' %}"> Créer une nouvelle inscription </a></button>
     </div>
 {% endblock content %}

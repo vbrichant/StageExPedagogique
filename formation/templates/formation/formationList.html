@@ -12,13 +12,13 @@
                     </li>
                 {% endfor %}
             </ul>
-            {% if user.formateur %}
-                <button class="new_formation_button">
-                    <a href="{% url 'formation:newFormationForm' %}"> New Formation </a>
-                </button>
-            {% endif %}
         {% else %}
-            <p>No formation are available</p>
+            <p>Auncune formation n'est disponible</p>
+        {% endif %}
+        {% if user.formateur %}
+            <button class="new_formation_button">
+                <a href="{% url 'formation:newFormationForm' %}"> Créer une nouvelle Formation </a>
+            </button>
         {% endif %}
     </div>
 {% endblock content %}

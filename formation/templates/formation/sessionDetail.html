@@ -16,7 +16,7 @@
             {% else %}
                 {% if user.student and session.get_count_inscription < session.max_students %}
                     <button class="inscription_session_button">
-                        <a href="{% url 'formation:inscriptionSession' session.id %}">S'inscrire</a>
+                        <a href="{% url 'formation:inscriptionSession' session.id %}">S'inscrire a la session</a>
                     </button>
                 {% endif %}
             {% endif %}
