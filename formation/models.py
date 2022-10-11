@@ -47,7 +47,7 @@ class SessionFormation(models.Model):
     def get_count_registration(self):
         return self.inscription_set.count()
 
-    def is_student_registered(self):
+    def get_students_registered(self):
         inscription_list = self.inscription_set.values_list("student", flat=True)
         student_list = []
         for inscription in inscription_list:
