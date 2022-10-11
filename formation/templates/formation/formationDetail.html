@@ -5,13 +5,25 @@
     <div class="formation_detail">
         <h1>Formation : {{ formation.name }} </h1>
         <p>Description : {{ formation.description }}</p>
-        <p> Formateur : {{ formation.formateur.get_name }}</p>
+        <p>Formateur : {{ formation.formateur.get_name }}</p>
+        {% if formation.formateur.user == user %}
+            <button class="modification_formation_button">
+                <a href="{% url 'formation:updateFormation' formation.id %}">
+                    Modifier la formation
+                </a>
+            </button>
+            <button class="suppression_formation_button">
+                <a href="{% url 'formation:deleteFormation' pk=formation.id %}">
+                    Supprimer la formation
+                </a>
+            </button>
+        {% endif %}
     </div>
     <div class="formation_session_table">
         <table>
             <tr>
-                <th>Date</th>
-                <th>Lieu</th>
+                <th>Date de la session</th>
+                <th>Lieu de la session</th>
                 <th>Nombre d'élèves inscrit</th>
             </tr>
             {% for session in formation.sessionformation_set.all %}
@@ -52,11 +64,13 @@
                         {% if user.is_authenticated and session.formation.formateur == user.formateur %}
                             <td>
                                 <button class="update_session_button"><a
-                                        href="{% url 'formation:updateSession' session.id %}">Modifier</a></button>
+                                        href="{% url 'formation:updateSession' session.id %}">Modifier la session</a>
+                                </button>
                             </td>
                             <td>
                                 <button class="suppression_session_button"><a
-                                        href="{% url 'formation:deleteSession' session.id %}">Supprimer</a></button>
+                                        href="{% url 'formation:deleteSession' session.id %}">Supprimer la session</a>
+                                </button>
                             </td>
                         {% endif %}
                     </tr>
@@ -68,16 +82,6 @@
         <button class="new_formation_button">
             <a href="{% url 'formation:newSessionForm' formation.id %}">
                 Ajouter une nouvelle session
-            </a>
-        </button>
-        <button class="modification_formation_button">
-            <a href="{% url 'formation:updateFormation' formation.id %}">
-                Modifier la formation
-            </a>
-        </button>
-        <button class="suppression_formation_button">
-            <a href="{% url 'formation:deleteFormation' pk=formation.id %}">
-                Supprimer la formation
             </a>
         </button>
     {% endif %}
