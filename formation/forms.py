@@ -1,12 +1,7 @@
-import contextvars
-import datetime
-
 from django import forms
-from calendar import HTMLCalendar
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 
-from . import models
 from .models import Formateur, Formation, SessionFormation, Inscription
 
 
@@ -66,16 +61,6 @@ class NewRegistrationForm(forms.Form):
     def create_new_registration(self, student):
         data = self.cleaned_data
         session = get_object_or_404(SessionFormation, id=data["session_formation"])
-        print(data["session_formation"])
-        print(session)
 
-        new_inscription = Inscription(session=session, student=student)
-        new_inscription.save()
-
-
-class UpdateSessionForm(forms.Form):
-    pass
-
-
-class UpdateFormationForm(forms.Form):
-    pass
+        # new_inscription = Inscription(session=session, student=student)
+        # new_inscription.save()

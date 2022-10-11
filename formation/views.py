@@ -1,8 +1,11 @@
 import calendar
+import datetime
 from datetime import date, timedelta
 
+from django.contrib import messages
 from django.contrib.auth.decorators import permission_required, login_required
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
@@ -46,11 +49,17 @@ class NewRegistrationFormView(LoginRequiredMixin, PermissionRequiredMixin, FormV
     permission_required = 'formation.add_inscription'
     model = Inscription
     template_name = 'formation/newRegistrationForm.html'
-    success_url = '/formation/'
+    success_url = '/formation/newRegistrationForm/'
     form_class = NewRegistrationForm
 
     def form_valid(self, form):
-        form.create_new_registration(self.request.user.student)
+        session = get_object_or_404(SessionFormation, id=form.cleaned_data["session_formation"])
+        if session.get_count_registration() < session.max_students:
+            form.create_new_registration(self.request.user.student)
+            messages.success(self.request, "Inscription enregistrée.")
+        else:
+            messages.error(self.request,
+                           "Le nombre d'inscription maximum est déjà atteint, Choisissez une autre session.")
         return super().form_valid(form)
 
 
@@ -148,10 +157,16 @@ class SessionDeleteView(LoginRequiredMixin, PermissionRequiredMixin, generic.edi
 @permission_required('formation.add_inscription', raise_exception=True)
 def registration_session(request, session_id):
     session = get_object_or_404(SessionFormation, pk=session_id)
+    print(request.user)
     user = request.user
-    new_inscription = Inscription(session=session, student=user.student)
-    new_inscription.save()
-    return HttpResponseRedirect(reverse('formation:inscription_list_current_student', args=(user.student.id,)))
+    # A changer : le signe de la comparaison
+    if session.get_count_registration() > session.max_students:
+        new_inscription = Inscription(session=session, student=user.student)
+        new_inscription.save()
+        return HttpResponseRedirect(reverse('formation:inscription_list_current_student', args=(user.student.id,)))
+    else:
+        messages.error(request, "Le nombre d'inscription maximum est déjà atteint, Choisissez une autre session.")
+        return HttpResponseRedirect(reverse('formation:formation_detail', args=(session.formation.id,)))
 
 
 @login_required
