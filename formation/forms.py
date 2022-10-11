@@ -73,9 +73,9 @@ class NewInscriptionForm(forms.Form):
         new_inscription.save()
 
 
-class ModificationSessionForm(forms.Form):
+class UpdateSessionForm(forms.Form):
     pass
 
 
-class ModificationFormationForm(forms.Form):
+class UpdateFormationForm(forms.Form):
     pass

@@ -1,9 +1,7 @@
 from datetime import date
 
-from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import permission_required, login_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
@@ -55,15 +53,6 @@ class NewInscriptionFormView(LoginRequiredMixin, PermissionRequiredMixin, FormVi
         return super().form_valid(form)
 
 
-class FormationListView(generic.ListView):
-    template_name = 'formation/formationList.html'
-    context_object_name = 'formation_list'
-
-    def get_queryset(self):
-        """Return all formation not close"""
-        return Formation.objects.all()
-
-
 ##
 # DetailView
 ##
@@ -88,6 +77,15 @@ class DetailSessionView(generic.DetailView):
 ##
 # ListView
 ##
+class FormationListView(generic.ListView):
+    template_name = 'formation/formationList.html'
+    context_object_name = 'formation_list'
+
+    def get_queryset(self):
+        """Return all formation not close"""
+        return Formation.objects.all()
+
+
 class FormationListForFormateurView(LoginRequiredMixin, generic.ListView):
     model = Formation
     template_name = "formation/formationList.html"
@@ -109,18 +107,37 @@ class InscriptionListForStudentsView(LoginRequiredMixin, generic.ListView):
 ##
 # UpdateView
 ##
-class UpdateFormationView(LoginRequiredMixin, generic.edit.UpdateView):
+class UpdateFormationView(LoginRequiredMixin, PermissionRequiredMixin, generic.edit.UpdateView):
+    permission_required = 'formation.change_formation'
     model = Formation
     fields = ['name', 'description']
     template_name = 'formation/newFormationForm.html'
     success_url = "/formation/"
 
 
-class UpdateSessionView(LoginRequiredMixin, generic.edit.UpdateView):
+class UpdateSessionView(LoginRequiredMixin, PermissionRequiredMixin, generic.edit.UpdateView):
+    permission_required = 'formation.change_sessionformation'
     model = SessionFormation
     fields = ["formation", "date", "place", "max_students"]
     template_name = 'formation/newSessionForm.html'
     success_url = "/formation/"
+
+
+##
+# Suppression (Formation et Session)
+##
+class FormationDeleteView(LoginRequiredMixin, PermissionRequiredMixin, generic.edit.DeleteView):
+    permission_required = 'formation.delete_formation'
+    model = Formation
+    success_url = "/formation/"
+    template_name = "formation/formationConfirmDelete.html"
+
+
+class SessionDeleteView(LoginRequiredMixin, PermissionRequiredMixin, generic.edit.DeleteView):
+    permission_required = 'formation.delete_sessionformation'
+    model = SessionFormation
+    success_url = "/formation/"
+    template_name = "formation/sessionConfirmDelete.html"
 
 
 ###
@@ -145,21 +162,6 @@ def desinscription_session(request, session_id):
     print(inscription)
     inscription.delete()
     return HttpResponseRedirect(reverse('formation:inscription_list_current_student', args=(student.id,)))
-
-
-##
-# Suppression (Formation et Session)
-##
-class FormationDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
-    model = Formation
-    success_url = "/formation/"
-    template_name = "formation/formationConfirmDelete.html"
-
-
-class SessionDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
-    model = SessionFormation
-    success_url = "/formation/"
-    template_name = "formation/sessionConfirmDelete.html"
 
 
 ##
