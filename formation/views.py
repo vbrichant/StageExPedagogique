@@ -5,16 +5,13 @@ from datetime import date, timedelta
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required, login_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.urls import reverse
 from django.utils.safestring import mark_safe
-
-# Create your views here.
 from django.views import generic
-from formation.forms import *
 from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
+from formation.forms import *
 from formation.utils import Calendar
 
 
@@ -162,8 +159,7 @@ def registration_session(request, session_id):
     session = get_object_or_404(SessionFormation, pk=session_id)
     print(request.user)
     user = request.user
-    # A changer : le signe de la comparaison
-    if session.get_count_registration() > session.max_students:
+    if session.get_count_registration() < session.max_students:
         new_inscription = Inscription(session=session, student=user.student)
         new_inscription.save()
         return HttpResponseRedirect(reverse('formation:inscription_list_current_student', args=(user.student.id,)))
