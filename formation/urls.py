@@ -1,6 +1,6 @@
-from django.template.defaulttags import url
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from schema_graph.views import Schema
 
 from . import views
 
@@ -41,4 +41,7 @@ urlpatterns = [
          name='formation_list_current_formateur'),
     path('formation/student/<int:pk>/', views.InscriptionListForStudentsView.as_view(),
          name='inscription_list_current_student'),
+
+    # graph_models
+    path("schema/", Schema.as_view(), name='schemaModels'),
 ]

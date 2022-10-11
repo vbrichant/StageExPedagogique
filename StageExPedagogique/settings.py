@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'formation.apps.FormationConfig',
     'bootstrap3',
     'django_select2',
+    'schema_graph'
 ]
 
 MIDDLEWARE = [
