@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import permission_required, login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
@@ -19,7 +20,7 @@ from formation.utils import Calendar
 # FormView
 ##
 class NewFormationFormView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
-    permission_required = 'formation.formation.can_add_formation'
+    permission_required = 'formation.add_formation'
     model = Formation, Formateur
     template_name = 'formation/newFormationForm.html'
     form_class = NewFormationForm
@@ -31,7 +32,7 @@ class NewFormationFormView(LoginRequiredMixin, PermissionRequiredMixin, FormView
 
 
 class NewSessionFormView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
-    permission_required = 'formation.session.can_add_session'
+    permission_required = 'formation.add_sessionformation'
     model = SessionFormation
     template_name = 'formation/newSessionForm.html'
     form_class = NewSessionForm
@@ -43,7 +44,7 @@ class NewSessionFormView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
 
 
 class NewInscriptionFormView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
-    permission_required = 'formation.inscription.can_add_inscription'
+    permission_required = 'formation.add_inscription'
     model = Inscription
     template_name = 'formation/newInscriptionForm.html'
     success_url = '/formation/'
@@ -125,6 +126,8 @@ class UpdateSessionView(LoginRequiredMixin, generic.edit.UpdateView):
 ###
 # Inscription/Desinscription
 ###
+@login_required
+@permission_required('formation.add_inscription', raise_exception=True)
 def inscription_session(request, session_id):
     session = get_object_or_404(SessionFormation, pk=session_id)
     user = request.user
@@ -133,6 +136,8 @@ def inscription_session(request, session_id):
     return HttpResponseRedirect(reverse('formation:inscription_list_current_student', args=(user.student.id,)))
 
 
+@login_required
+@permission_required('formation.add_inscription', raise_exception=True)
 def desinscription_session(request, session_id):
     session = get_object_or_404(SessionFormation, pk=session_id)
     student = request.user.student
