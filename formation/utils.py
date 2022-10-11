@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 from calendar import HTMLCalendar
 from .models import SessionFormation
 
