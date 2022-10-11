@@ -36,11 +36,11 @@ ul {
 }
 
 
-.left {
+.position_left a{
   float: left;
 }
 
-.right {
+.position_right a{
   float: right;
 }
 

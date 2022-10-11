@@ -8,3 +8,6 @@ Lundi 10 octobre:
 Mardi 11 octobre:
     Permission : creation, update et delete de formation session et inscription
     Graph_model : ajout au projet
+    Calendrier : Ajout des boutton pour changer de mois + ajout de lien clickable pour chaques formations dans le calendrier
+    Traduction : Modification de class/variable/methode du français vers l'anglais
+    Inscrition : Ajout de messages d'erreur/succes + test si l'user est déja inscrit ou si la session est complette
