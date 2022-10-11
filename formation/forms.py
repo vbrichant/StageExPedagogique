@@ -60,10 +60,10 @@ class NewSessionForm(forms.Form):
         new_session.save()
 
 
-class NewInscriptionForm(forms.Form):
+class NewRegistrationForm(forms.Form):
     session_formation = forms.ChoiceField(choices=get_session_name_list())
 
-    def create_new_inscription(self, student):
+    def create_new_registration(self, student):
         data = self.cleaned_data
         session = get_object_or_404(SessionFormation, id=data["session_formation"])
         print(data["session_formation"])

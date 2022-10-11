@@ -1,5 +1,3 @@
-import datetime
-
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
@@ -46,7 +44,7 @@ class SessionFormation(models.Model):
     def __str__(self):
         return self.formation.name + " " + str(self.date)
 
-    def get_count_inscription(self):
+    def get_count_registration(self):
         return self.inscription_set.count()
 
     def is_student_registered(self):
@@ -58,7 +56,6 @@ class SessionFormation(models.Model):
 
     def is_open(self):
         now = timezone.now()
-        today = datetime.datetime.now()
         return self.date > now
 
 
