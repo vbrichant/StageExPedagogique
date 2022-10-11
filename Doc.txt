@@ -1,0 +1,10 @@
+Lundi 10 octobre:
+    Modification de Bootstrap 5 vers Bootstrap 3
+    Balisage de l'HTML
+    Amélioration du CSS
+    Correction d'une erreur de commit(Merge imposible a cause de la DB)
+    Permission : creation de formation, de session et d'inscription (pas encore fonctionnel)
+
+Mardi 11 octobre:
+    Permission : creation, update et delete de formation session et inscription
+    Graph_model : ajout au projet
