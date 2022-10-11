@@ -1,4 +1,5 @@
-from datetime import date
+import calendar
+from datetime import date, timedelta
 
 from django.contrib.auth.decorators import permission_required, login_required
 from django.http import HttpResponseRedirect
@@ -174,15 +175,28 @@ class CalendarView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        # use today's date for the calendar
-        d = get_date(self.request.GET.get('day', None))
-        # Instantiate our calendar class with today's year and date
-        calendar = Calendar()
-        # Call the formatmonth method, which returns our calendar as a table
-        html_calendar = calendar.formatmonth(theyear=d.year, themonth=d.month, withyear=True)
+        d = get_date(self.request.GET.get('month', None))
+        calendar_object = Calendar()
+        html_calendar = calendar_object.formatmonth(theyear=d.year, themonth=d.month, withyear=True)
         context['calendar'] = mark_safe(html_calendar)
+        context['prev_month'] = prev_month(d)
+        context['next_month'] = next_month(d)
         return context
+
+
+def prev_month(d):
+    first = d.replace(day=1)
+    previous_month_object = first - timedelta(days=1)
+    month = 'month=' + str(previous_month_object.year) + '-' + str(previous_month_object.month)
+    return month
+
+
+def next_month(d):
+    days_in_month = calendar.monthrange(d.year, d.month)[1]
+    last = d.replace(day=days_in_month)
+    next_month_object = last + timedelta(days=1)
+    month = 'month=' + str(next_month_object.year) + '-' + str(next_month_object.month)
+    return month
 
 
 def get_date(req_day):
