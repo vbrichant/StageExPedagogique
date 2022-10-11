@@ -61,6 +61,6 @@ class NewRegistrationForm(forms.Form):
     def create_new_registration(self, student):
         data = self.cleaned_data
         session = get_object_or_404(SessionFormation, id=data["session_formation"])
-
-        # new_inscription = Inscription(session=session, student=student)
-        # new_inscription.save()
+        new_inscription = Inscription(session=session, student=student)
+        print(new_inscription)
+        new_inscription.save()

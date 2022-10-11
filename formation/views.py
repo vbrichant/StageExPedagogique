@@ -54,12 +54,15 @@ class NewRegistrationFormView(LoginRequiredMixin, PermissionRequiredMixin, FormV
 
     def form_valid(self, form):
         session = get_object_or_404(SessionFormation, id=form.cleaned_data["session_formation"])
-        if session.get_count_registration() < session.max_students:
-            form.create_new_registration(self.request.user.student)
-            messages.success(self.request, "Inscription enregistrée.")
-        else:
+        if self.request.user.id in session.get_students_registered():
+            messages.error(self.request,
+                           "Vous êtes déjà inscrit à cette session")
+        elif session.get_count_registration() > session.max_students:
             messages.error(self.request,
                            "Le nombre d'inscription maximum est déjà atteint, Choisissez une autre session.")
+        else:
+            form.create_new_registration(self.request.user.student)
+            messages.success(self.request, "Inscription enregistrée.")
         return super().form_valid(form)
 
 

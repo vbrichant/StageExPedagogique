@@ -9,7 +9,7 @@
         <p> Lieux : {{ session.place }}</p>
         <p> Nombre d'étudiant inscrit : {{ session.get_count_registration }}/{{ session.max_students }}</p>
         <div class="session_registration_cancel_registration_div">
-            {% if user.student.id in session.is_student_registered %}
+            {% if user.student.id in session.get_students_registered %}
                 <button class="cancel_registration_session_button">
                     <a href="{% url 'formation:cancelRegistrationSession' session.id %}">Se désinscrire</a>
                 </button>
