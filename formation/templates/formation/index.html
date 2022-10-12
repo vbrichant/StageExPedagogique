@@ -4,7 +4,9 @@
 
 {% block content %}
     <div class="formation_list">
-        <h1 class="title_index">Liste des formations organisées</h1>
+        <div class="title_index_div">
+            <h1 class="title_index">Liste des formations organisées</h1>
+        </div>
         {% if formation_list %}
             <ul>
                 {% for formation in formation_list %}

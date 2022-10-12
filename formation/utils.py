@@ -1,5 +1,8 @@
 from datetime import datetime
 from calendar import HTMLCalendar
+
+from django.urls import reverse
+
 from .models import SessionFormation
 
 
@@ -13,9 +16,9 @@ class Calendar(HTMLCalendar):
         session_per_day = session.filter(date__day=day)
         d = ''
         for session in session_per_day:
-            d += f"<li> {session.formation.name} </li>"
-            # d += f"<li><a href='{% url 'formation:session_detail' session.id %}'> {session.formation.name} </a></li>"
-
+            # d += f"<li> {session.formation.name} </li>"
+            url = reverse('formation:session_detail', kwargs={'pk': session.id})
+            d += f"<li><a href='{url}'> {session.formation.name} </a></li>"
         if day != 0:
             return f"<td><span class='date'>{day}</span><ul class='days_list'> {d} </ul></td>"
         return '<td></td>'

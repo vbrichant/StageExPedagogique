@@ -17,7 +17,21 @@ td, th {
     border: 1px solid black;
 }
 
+.title_index_div{
+    align-items: center;
+}
 
-.block_content div {
-    margin-inline: 10px;
+.title_index{
+    align-items: center;
+    margin: 0 0 0 0;
+    padding-top: 5px;
+}
+
+.block_content{
+    vertical-align: center;
+    align-self: center;
+    background-color: beige;
+    height: 100%;
+    margin-inline: 10em;
+    padding-inline: 2em;
 }
