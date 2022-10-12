@@ -17,7 +17,7 @@ class Calendar(HTMLCalendar):
         d = ''
         for session in session_per_day:
             # d += f"<li> {session.formation.name} </li>"
-            url = reverse('formation:session_detail', kwargs={'pk': session.id})
+            url = reverse('formation:session_detail', kwargs={'sessionFormation_id': session.id})
             d += f"<li><a href='{url}'> {session.formation.name} </a></li>"
         if day != 0:
             return f"<td><span class='date'>{day}</span><ul class='days_list'> {d} </ul></td>"

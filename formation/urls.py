@@ -13,17 +13,17 @@ urlpatterns = [
     # URL Formation APP
 
     # Detail view
-    path('formation/<int:pk>/', views.DetailFormationView.as_view(), name='formation_detail'),
-    path('session/<int:pk>/', views.DetailSessionView.as_view(), name='session_detail'),
+    path('formation/<int:formation_id>/', views.DetailFormationView.as_view(), name='formation_detail'),
+    path('formation/session/<int:sessionFormation_id>/', views.DetailSessionView.as_view(), name='session_detail'),
 
     # New object form
     path('newFormationForm/', views.NewFormationFormView.as_view(), name='newFormationForm'),
-    path('newSessionForm/<int:pk>', views.NewSessionFormView.as_view(), name='newSessionForm'),
+    path('newSessionForm/<int:formation_id>', views.NewSessionFormView.as_view(), name='newSessionForm'),
     path('newRegistrationForm/', views.NewRegistrationFormView.as_view(), name='newRegistrationForm'),
 
     # Modification Object
-    path('formation/<int:pk>/update', views.UpdateFormationView.as_view(), name='updateFormation'),
-    path('formation/session/<int:pk>/update', views.UpdateSessionView.as_view(), name='updateSession'),
+    path('formation/<int:formation_id>/update', views.UpdateFormationView.as_view(), name='updateFormation'),
+    path('formation/session/<int:sessionFormation_id>/update', views.UpdateSessionView.as_view(), name='updateSession'),
 
     # Button Inscription/Desinscription
     path('newRegistration/session/<int:session_id>/', views.registration_session, name='registrationSession'),
@@ -31,16 +31,16 @@ urlpatterns = [
          name='cancelRegistrationSession'),
 
     # SuppressionFormation et SuppressionSession
-    path('formation/<int:pk>/delete', views.FormationDeleteView.as_view(), name='deleteFormation'),
-    path('formation/session/<int:pk>/delete', views.SessionDeleteView.as_view(), name='deleteSession'),
+    path('formation/<int:formation_id>/delete', views.FormationDeleteView.as_view(), name='deleteFormation'),
+    path('formation/session/<int:sessionFormation_id>/delete', views.SessionDeleteView.as_view(), name='deleteSession'),
 
     # Calendar
     path('calendar/', views.CalendarView.as_view(), name='calendar'),
 
     # NavBar
-    path('formation/formateur/<int:pk>/', views.FormationListForFormateurView.as_view(),
+    path('formation/formateur/<int:formateur_id>/', views.FormationListForFormateurView.as_view(),
          name='formation_list_current_formateur'),
-    path('formation/student/<int:pk>/', views.RegistrationListForStudentsView.as_view(),
+    path('formation/student/<int:student_id>/', views.RegistrationListForStudentsView.as_view(),
          name='inscription_list_current_student'),
 
     # graph_models
