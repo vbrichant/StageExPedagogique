@@ -23,7 +23,7 @@
         </div>
         <div class="modification_session_div">
             {% if user.formateur and session.formation.formateur == user.formateur %}
-                <button class="modification_session_button"><a href="{% url 'formation:updateSession' pk=session.id %}">
+                <button class="modification_session_button"><a href="{% url 'formation:updateSession' session.id %}">
                     Modifier la session</a>
                 </button>
             {% endif %}

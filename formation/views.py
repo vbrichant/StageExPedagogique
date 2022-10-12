@@ -70,18 +70,20 @@ class DetailFormationView(generic.DetailView):
     model = Formation
     template_name = "formation/formationDetail.html"
     context_object_name = "formation"
+    pk_url_kwarg = 'formation_id'
 
     def get_queryset(self):
-        return Formation.objects.all()
+        return super().get_queryset().filter(id=self.kwargs['formation_id'])
 
 
 class DetailSessionView(generic.DetailView):
     model = SessionFormation
     template_name = "formation/sessionDetail.html"
     context_object_name = "session"
+    pk_url_kwarg = 'sessionFormation_id'
 
     def get_queryset(self):
-        return SessionFormation.objects.all()
+        return super().get_queryset().filter(id=self.kwargs['sessionFormation_id'])
 
 
 ##
@@ -123,6 +125,7 @@ class UpdateFormationView(LoginRequiredMixin, PermissionRequiredMixin, generic.e
     fields = ['name', 'description']
     template_name = 'formation/newFormationForm.html'
     success_url = "/formation/"
+    pk_url_kwarg = "formation_id"
 
 
 class UpdateSessionView(LoginRequiredMixin, PermissionRequiredMixin, generic.edit.UpdateView):
@@ -131,6 +134,7 @@ class UpdateSessionView(LoginRequiredMixin, PermissionRequiredMixin, generic.edi
     fields = ["formation", "date", "place", "max_students"]
     template_name = 'formation/newSessionForm.html'
     success_url = "/formation/"
+    pk_url_kwarg = "sessionFormation_id"
 
 
 ##
@@ -141,6 +145,7 @@ class FormationDeleteView(LoginRequiredMixin, PermissionRequiredMixin, generic.e
     model = Formation
     success_url = "/formation/"
     template_name = "formation/formationConfirmDelete.html"
+    pk_url_kwarg = "formation_id"
 
 
 class SessionDeleteView(LoginRequiredMixin, PermissionRequiredMixin, generic.edit.DeleteView):
@@ -148,6 +153,7 @@ class SessionDeleteView(LoginRequiredMixin, PermissionRequiredMixin, generic.edi
     model = SessionFormation
     success_url = "/formation/"
     template_name = "formation/sessionConfirmDelete.html"
+    pk_url_kwarg = "sessionFormation_id"
 
 
 ###
