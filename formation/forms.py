@@ -40,6 +40,7 @@ class NewFormationForm(forms.Form):
 
 
 class NewSessionForm(forms.Form):
+    print()
     get_formation_name_list()
     formation_name = forms.ChoiceField(choices=get_formation_name_list())
     formation_place = forms.CharField(max_length=50)

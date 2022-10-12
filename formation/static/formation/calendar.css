@@ -1,56 +1,62 @@
 /* cal/static/cal/css/styles.css */
 
 .calendar {
-  width: 70%;
-  margin: auto;
-  font-size: 13px;
+    width: 70%;
+    margin: auto;
+    font-size: 13px;
 }
 
 .calendar tr, .calendar td {
-  border: 1px solid black;
+    border: 1px solid black;
 }
 
 .calendar th {
-  padding: 10px;
-  text-align: center;
-  font-size: 18px;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
 }
 
 .calendar td {
-  width: 200px;
-  height: 100px;
-  padding: 20px 0 0 5px;
+    width: 200px;
+    height: 100px;
+    padding: 20px 0 0 5px;
 }
 
 .month {
-  font-size: 25px;
+    font-size: 25px;
 }
 
 .date {
-  font-size: 16px;
+    font-size: 16px;
 }
 
 ul {
-  height: 100%;
-  padding: 0 5px 0 20px;
-}
-
-
-.position_left a{
-  float: left;
-}
-
-.position_right a{
-  float: right;
-}
-
-.btn {
-  outline: none;
-  color: black;
-  background-color: transparent;
-  box-shadow: 0 0 0 0;
+    height: 100%;
+    padding: 0 5px 0 20px;
 }
 
 .clearfix {
-  margin: 15px;
+    margin: 15px;
 }
+
+.button-prev {
+    margin-left: 15em;
+    float: left;
+}
+.btn-prev {
+    outline: none;
+    color: black;
+    background-color: transparent;
+    box-shadow: 0 0 0 0;
+}
+.button-next {
+    margin-right: 15em;
+    float: right;
+}
+.btn-next {
+    outline: none;
+    color: black;
+    background-color: transparent;
+    box-shadow: 0 0 0 0;
+}
+
