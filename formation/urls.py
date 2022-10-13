@@ -9,7 +9,6 @@ urlpatterns = [
     path('', views.FormationListView.as_view(), name='formation_list'),
     # path('accounts/login/', views.LoginView.as_view(), name='login'),
     path('accounts/login/', auth_views.LoginView.as_view()),
-    path('select2/', include('django_select2.urls')),
     # URL Formation APP
 
     # Detail view
