@@ -23,6 +23,7 @@
         <table>
             <tr>
                 <th>Date de la session</th>
+                <th>Heure de la session</th>
                 <th>Lieu de la session</th>
                 <th>Nombre d'élèves inscrit</th>
             </tr>
@@ -36,6 +37,9 @@
                             </a>
                         </td>
                         <td>
+                            {{ session.time }}
+                        </td>
+                        <td>
                             {{ session.place }}
                         </td>
                         <td>
@@ -43,19 +47,18 @@
                         </td>
                         <!-- Si student => button pour s'inscrire a la session -->
                         {% if user.is_authenticated and user.student and session.get_count_registration < session.max_students %}
-                            <!-- Si student pas inscrit => button "S'inscrire"-->
-                            {% if user.student.id not in session.is_student_registered %}
+                            {% if user.student.id in session.get_students_registered %}
                                 <td>
-                                    <button class="registration_button"><a
-                                            href="{% url 'formation:registrationSession' session.id %}">S'inscrire</a>
+                                    <button class="cancel_registration_button">
+                                        <a href="{% url 'formation:cancelRegistrationSession' session.id %}">
+                                            Se désinscrire
+                                        </a>
                                     </button>
                                 </td>
                             {% else %}
-                                <!-- Si student inscrit => button "Se désinscrire"-->
                                 <td>
-                                    <button class="cancel_registration_button"><a
-                                            href="{% url 'formation:cancelRegistrationSession' session.id %}">Se
-                                        désinscrire</a>
+                                    <button class="registration_button"><a
+                                            href="{% url 'formation:registrationSession' session.id %}">S'inscrire</a>
                                     </button>
                                 </td>
                             {% endif %}

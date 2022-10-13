@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
@@ -37,12 +39,13 @@ class Formation(models.Model):
 
 class SessionFormation(models.Model):
     formation = models.ForeignKey(Formation, on_delete=models.CASCADE)
-    date = models.DateTimeField("formation date")
+    date = models.DateField("date")
+    time = models.TimeField("time")
     place = models.CharField(max_length=200)
     max_students = models.IntegerField()
 
     def __str__(self):
-        return self.formation.name + " " + str(self.date)
+        return self.formation.name + " " + str(self.get_date_time())
 
     def get_count_registration(self):
         return self.inscription_set.count()
@@ -54,8 +57,11 @@ class SessionFormation(models.Model):
             student_list.append(int(inscription))
         return inscription_list
 
+    def get_date_time(self):
+        return datetime.combine(date=self.date, time=self.time)
+
     def is_open(self):
-        now = timezone.now()
+        now = datetime.today().date()
         return self.date > now
 
 

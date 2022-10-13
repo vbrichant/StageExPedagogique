@@ -4,8 +4,12 @@
 {% block content %}
     <link rel="stylesheet" href="{% static 'formation/calendar.css' %}">
     <div class="clearfix">
-        <a class="position_left btn btn-info" href="{% url 'formation:calendar' %}?{{ prev_month }}"> Mois précédent </a>
-        <a class="position_right btn btn-info " href="{% url 'formation:calendar' %}?{{ next_month }}"> Mois suivant </a>
+        <button class="button-prev">
+            <a class=" btn-prev btn-info" href="{% url 'formation:calendar' %}?{{ prev_month }}"> Mois précédent </a>
+        </button>
+        <button class="button-next">
+            <a class=" btn-next btn-info " href="{% url 'formation:calendar' %}?{{ next_month }}"> Mois suivant </a>
+        </button>
     </div>
     {{ calendar }}
 {% endblock %}

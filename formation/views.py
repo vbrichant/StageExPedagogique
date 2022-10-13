@@ -37,6 +37,14 @@ class NewSessionFormView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
     form_class = NewSessionForm
     success_url = '/formation/'
 
+    def get_form_kwargs(self):
+        """ Passes the request object to the form class.
+         This is necessary to only display members that belong to a given user"""
+
+        kwargs = super(NewSessionFormView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
     def form_valid(self, form):
         form.create_new_session()
         return super().form_valid(form)

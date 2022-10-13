@@ -17,7 +17,7 @@ td, th {
     border: 1px solid black;
 }
 
-.title_index_div{
+.title_index_div {
     align-items: center;
 }
 
@@ -34,4 +34,5 @@ td, th {
     height: 100%;
     margin-inline: 10em;
     padding-inline: 2em;
+    padding-top: 20px;
 }

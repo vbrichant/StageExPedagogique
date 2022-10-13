@@ -1,11 +1,13 @@
+import contextvars
+
 from django import forms
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 
-from .models import Formateur, Formation, SessionFormation, Inscription
+from .models import Formateur, Formation, SessionFormation, Inscription, User
 
 
-def get_formateur_name():
+def get_formateur_name_list():
     formateur_list = []
     for formateur in Formateur.objects.all():
         formateur_list.append(formateur.get_name)
@@ -16,7 +18,8 @@ def get_formation_name_list():
     formation_list = Formation.objects.all()
     formation_list_name = []
     for formation in formation_list:
-        formation_list_name.append((formation.id, formation.name))
+        if formation.formateur.user == "self.user":
+            formation_list_name.append((formation.id, formation.name))
     return formation_list_name
 
 
@@ -39,19 +42,36 @@ class NewFormationForm(forms.Form):
         new_formation.save()
 
 
-class NewSessionForm(forms.Form):
-    get_formation_name_list()
-    formation_name = forms.ChoiceField(choices=get_formation_name_list())
-    formation_place = forms.CharField(max_length=50)
-    formation_date = forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M'],
-                                         initial=timezone.now())
-    formation_max_students = forms.IntegerField(widget=forms.NumberInput, min_value=5, max_value=100)
+class NewSessionForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        """ Grants access to the request object so that only members of the current user
+        are given as options"""
+
+        self.request = kwargs.pop('request')
+        super(NewSessionForm, self).__init__(*args, **kwargs)
+        self.fields['formation'].queryset = Formation.objects.filter(
+            formateur__user=self.request.user)
+
+    class Meta:
+        model = SessionFormation
+        fields = ['formation', 'place', 'date', 'time', 'max_students']
+        widgets = {
+            'date': forms.SelectDateWidget(attrs={'type': 'date'}),
+            'time': forms.TimeInput(attrs={'type': 'time'}),
+        }
+
+    formation = forms.ModelChoiceField(queryset=None,
+                                       to_field_name='name',
+                                       widget=forms.Select)
+    place = forms.CharField
+    max_students = forms.IntegerField(min_value=5, max_value=150)
 
     def create_new_session(self):
         data = self.cleaned_data
-        new_session = SessionFormation(formation_id=data["formation_name"], place=data["formation_place"],
-                                       date=data["formation_date"],
-                                       max_students=data["formation_max_students"])
+        new_session = SessionFormation(formation_id=data["formation"].id, place=data["place"],
+                                       date=data["date"], time=data["time"],
+                                       max_students=data["max_students"])
         new_session.save()
 
 
@@ -62,5 +82,4 @@ class NewRegistrationForm(forms.Form):
         data = self.cleaned_data
         session = get_object_or_404(SessionFormation, id=data["session_formation"])
         new_inscription = Inscription(session=session, student=student)
-        print(new_inscription)
         new_inscription.save()
