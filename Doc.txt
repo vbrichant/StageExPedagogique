@@ -11,3 +11,15 @@ Mardi 11 octobre:
     Calendrier : Ajout des boutton pour changer de mois + ajout de lien clickable pour chaques formations dans le calendrier
     Traduction : Modification de class/variable/methode du français vers l'anglais
     Inscrition : Ajout de messages d'erreur/succes + test si l'user est déja inscrit ou si la session est complette
+
+Mercredi 12 Octobre:
+    Modification des URLS : attribution de nom de variable plus explicite a la place des 'PK' utilisé
+    CSS : Positionnement des button 'mois suivant' et 'mois précédent' de la CalendarView
+    Modifictaion du model session (time => date et time)  : modification pour avoir les deux valeurs date et time a la place d'une seule
+    Modifiction de NewSessionForm : Modification du query_set pour n'avoir que les formation créée par le current formateur
+                                    Modification de l'input 'date' pour le séparer en deux input('date' et 'time')
+
+Jeudi 13 Octobre:
+    Fin de la modification de NewSessionForm (enfin fonctionnel)
+    Modification de is_open() du modèle SessionFormation afin de prendre en compte l'heure
+    Création de test (is_open() de models.SessionFormation + XXXX)
