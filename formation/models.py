@@ -51,13 +51,10 @@ class SessionFormation(models.Model):
         return self.inscription_set.count()
 
     def get_students_registered(self):
-        print("ici")
         inscription_list = self.inscription_set.values_list("student", flat=True)
         student_list = []
         for inscription in inscription_list:
             student_list.append(int(inscription))
-        print(student_list)
-        print(inscription_list)
         return inscription_list
 
     def get_date_time(self):
