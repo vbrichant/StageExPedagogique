@@ -7,7 +7,6 @@ from . import views
 app_name = 'formation'
 urlpatterns = [
 
-    # path('accounts/login/', views.LoginView.as_view(), name='login'),
     path('accounts/login/', auth_views.LoginView.as_view()),
     # URL Formation APP
     path('', views.FormationListView.as_view(), name='formation_list'),
