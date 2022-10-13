@@ -61,8 +61,8 @@ class SessionFormation(models.Model):
         return datetime.combine(date=self.date, time=self.time)
 
     def is_open(self):
-        now = datetime.today().date()
-        return self.date > now
+        now = datetime.now()
+        return self.get_date_time() > now
 
 
 class Inscription(models.Model):
