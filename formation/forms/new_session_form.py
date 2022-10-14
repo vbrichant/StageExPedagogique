@@ -1,21 +1,8 @@
-import contextvars
-
 from django import forms
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404
 
-from .models import Formateur, Formation, SessionFormation, Inscription
-
-
-class NewFormationForm(forms.Form):
-    formation_name = forms.CharField()
-    formation_description = forms.CharField(widget=forms.Textarea)
-
-    def create_new_formation(self, user_logged):
-        data = self.cleaned_data
-        new_formation = Formation(name=data["formation_name"], description=data["formation_description"],
-                                  formateur=user_logged)
-        new_formation.save()
+from formation.model.Formation import Formation
+from formation.model.SessionFormation import SessionFormation
 
 
 class NewSessionForm(forms.ModelForm):
@@ -47,16 +34,3 @@ class NewSessionForm(forms.ModelForm):
                                        date=data["date"], time=data["time"],
                                        max_students=data["max_students"])
         new_session.save()
-
-
-class NewRegistrationForm(forms.Form):
-    class Meta:
-        model = SessionFormation
-
-    session_formation = forms.ModelChoiceField(queryset=SessionFormation.objects.all())
-
-    def create_new_registration(self, student):
-        data = self.cleaned_data
-        session = get_object_or_404(SessionFormation, id=data["session_formation"])
-        new_inscription = Inscription(session=session, student=student)
-        new_inscription.save()

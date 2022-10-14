@@ -3,7 +3,7 @@ from calendar import HTMLCalendar
 
 from django.urls import reverse
 
-from .models import SessionFormation
+from formation.model.SessionFormation import SessionFormation
 
 
 class Calendar(HTMLCalendar):

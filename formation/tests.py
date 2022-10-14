@@ -1,8 +1,14 @@
 from datetime import datetime, timedelta
+
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-from .models import *
+from formation.model.Formateur import Formateur
+from formation.model.Formation import Formation
+from formation.model.Inscription import Inscription
+from formation.model.SessionFormation import SessionFormation
+from formation.model.Student import Student
 
 
 def create_user(user_name):
@@ -134,7 +140,7 @@ class FormationListForFormateurViewTest(TestCase):
 class RegistrationListForStudentsViewTest(TestCase):
     def test_without_registration(self):
         date = datetime.now()
-        student1 = create_student(student_name="student_test_1",matricule='HE200000')
+        student1 = create_student(student_name="student_test_1", matricule='HE200000')
         formateur1 = create_formateur(formateur_name="formateur_test_1")
         formation1 = create_formation(formateur=formateur1, name="formation_test_1")
         session1 = create_session_formation(formation=formation1, date=date, place='test', max_students=15)
@@ -147,7 +153,7 @@ class RegistrationListForStudentsViewTest(TestCase):
 
     def test_with_one_registration_for_student(self):
         date = datetime.now()
-        student1 = create_student(student_name="student_test_1",matricule="HE200000")
+        student1 = create_student(student_name="student_test_1", matricule="HE200000")
         formateur1 = create_formateur(formateur_name="formateur_test_1")
         formation1 = create_formation(formateur=formateur1, name="formation_test_1")
         session1 = create_session_formation(formation=formation1, date=date, place='test', max_students=15)
