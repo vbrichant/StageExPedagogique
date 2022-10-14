@@ -20,7 +20,7 @@ from formation.utils import Calendar
 ##
 class NewFormationFormView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
     permission_required = 'formation.add_formation'
-    model = Formation, Formateur
+    model = Formation
     template_name = 'formation/newFormationForm.html'
     form_class = NewFormationForm
     success_url = '/formation/'
@@ -42,7 +42,7 @@ class NewSessionFormView(LoginRequiredMixin, PermissionRequiredMixin, FormView):
          This is necessary to only display members that belong to a given user"""
 
         kwargs = super(NewSessionFormView, self).get_form_kwargs()
-        kwargs['request'] = self.request
+        kwargs['user'] = self.request.user
         return kwargs
 
     def form_valid(self, form):
