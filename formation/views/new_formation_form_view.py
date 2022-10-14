@@ -13,5 +13,6 @@ class NewFormationFormView(LoginRequiredMixin, PermissionRequiredMixin, CreateVi
     success_url = '/formation/'
 
     def form_valid(self, form):
+
         form.instance.formateur = self.request.user.formateur
         return super().form_valid(form)
