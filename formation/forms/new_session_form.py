@@ -20,5 +20,3 @@ class NewSessionForm(forms.ModelForm):
     formation = forms.ModelChoiceField(queryset=None,
                                        to_field_name='name')
     max_students = forms.IntegerField(min_value=5, max_value=150)
-
-
