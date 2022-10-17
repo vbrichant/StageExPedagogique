@@ -7,7 +7,7 @@ class Student(models.Model):
     matricule = models.CharField(max_length=20, default=0)
 
     def __str__(self):
-        return self.user.username.replace("_", " ")
+        return self.user.first_name + " " + self.user.last_name
 
     def get_name(self):
-        return self.user.username.replace("_", " ")
+        return self.user.first_name + " " + self.user.last_name

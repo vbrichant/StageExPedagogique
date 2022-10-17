@@ -33,11 +33,11 @@
                     <tr>
                         <td>
                             <a href="{% url 'formation:session_detail' session.id %}">
-                                {{ session.date }}
+                                {{ session.datetime.date }}
                             </a>
                         </td>
                         <td>
-                            {{ session.time }}
+                            {{ session.datetime.time }}
                         </td>
                         <td>
                             {{ session.place }}

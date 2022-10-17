@@ -9,4 +9,4 @@ class Inscription(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.session.formation.name + " " + str(self.session.date) + " " + self.student.matricule
+        return self.session.formation.name + " " + str(self.session.datetime) + " " + self.student.matricule

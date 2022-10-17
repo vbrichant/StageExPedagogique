@@ -11,6 +11,3 @@ class DetailSessionView(generic.DetailView):
 
     def get_queryset(self):
         return super().get_queryset().filter(id=self.kwargs['sessionFormation_id'])
-
-
-##
