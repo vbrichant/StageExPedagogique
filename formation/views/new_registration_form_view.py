@@ -1,11 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.shortcuts import get_object_or_404
-from django.views.generic import FormView, CreateView
+from django.views.generic import CreateView
 
 from formation.forms.new_registration_form import NewRegistrationForm
 from formation.model.Inscription import Inscription
-from formation.model.SessionFormation import SessionFormation
 
 
 class NewRegistrationFormView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):

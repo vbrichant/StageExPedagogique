@@ -38,8 +38,7 @@ class InscriptionInLine(admin.TabularInline):
 
 class SessionFormationAdmin(admin.ModelAdmin):
     fieldsets = [('formation', {'fields': ['formation']}),
-                 ('date', {'fields': ['date']}),
-                 ('time', {'fields': ['time']}),
+                 ('datetime', {'fields': ['datetime']}),
                  ('place', {'fields': ['place']}),
                  ('max_students', {'fields': ['max_students']})]
     inlines = [InscriptionInLine]
