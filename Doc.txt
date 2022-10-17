@@ -23,3 +23,5 @@ Jeudi 13 Octobre:
     Fin de la modification de NewSessionForm (enfin fonctionnel)
     Modification de is_open() du modèle SessionFormation afin de prendre en compte l'heure
     Création de test (is_open() de models.SessionFormation + XXXX)
+    Modification des vues formulaires pour en faires des CreateView
+    Modification de la validations des formulaires pour que elle se fasse dans l'
