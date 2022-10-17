@@ -8,9 +8,6 @@ from formation.model.SessionFormation import SessionFormation
 class NewSessionForm(forms.ModelForm):
 
     def __init__(self, user: User, *args, **kwargs):
-        """ Grants access to the request object so that only members of the current user
-        are given as options"""
-
         self.user = user
         super(NewSessionForm, self).__init__(*args, **kwargs)
         self.fields['formation'].queryset = Formation.objects.filter(

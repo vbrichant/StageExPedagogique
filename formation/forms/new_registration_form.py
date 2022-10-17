@@ -12,9 +12,6 @@ from formation.model.SessionFormation import SessionFormation
 
 class NewRegistrationForm(ModelForm):
     def __init__(self, user: User, *args, **kwargs):
-        """ Grants access to the request object so that only members of the current user
-        are given as options"""
-
         self.user = user
         super(NewRegistrationForm, self).__init__(*args, **kwargs)
 
