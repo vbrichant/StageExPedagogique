@@ -3,44 +3,67 @@
 {% bootstrap_css %}
 {% bootstrap_javascript jquery=1 %}
 <link rel="stylesheet" href="{% static 'formation/style.css' %}">
-<body>
-<nav class="nav_bar">
-    <div class="formation_list_link">
-        <a href="{% url 'formation:formation_list' %}">Index/Home</a>
-    </div>
-    <div class="calendar_link">
-        <a href="{% url 'formation:calendar' %}">Calendrier des formation</a>
-    </div>
-    <div id="authenticated_div">
-        {% if user.is_authenticated %}
-            <!-- Mes Formation (si Formateur) -->
-            {% if user.formateur %}
-                <button class="formation_current_user_list_link">
-                    <a href="{% url 'formation:formation_list_current_formateur' user.formateur.id %}">
-                        Mes formation
-                    </a>
-                </button>
-            {% endif %}
+<body class="">
+<nav class="navbar navbar-default navbar-fixed-top justify-content-start flew-nowrap">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a id="formation-list-link" class="navbar-brand" href="{% url 'formation:formation_list' %}">
+                <img src="/static/img/logo_osis.png" alt="OSIS" style="margin-top: -10px; margin-left: -10px"></a>
+        </div>
 
-            <!-- Mes Inscription (si Students) -->
-            {% if user.student %}
-                <button class="inscription_current_user_list_link">
-                    <a href="{% url 'formation:inscription_list_current_student' user.student.id %}">
-                        Mes inscription
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown" id="calendar-link">
+                    <a href="{% url 'formation:calendar' %}">
+                        <span>Calendrier des formation</span>
                     </a>
-                </button>
-            {% endif %}
+                </li>
 
-            <!-- User Name (debug) -->
-            <div> {{ user }}</div>
-            <!-- Login Button -->
-            <button class="login_button"><a href="{% url 'logout' %}">Déconnexion</a></button>
-        {% else %}
-            <button class="logout_button"><a href="{% url 'login' %}">Connexion</a></button>
-        {% endif %}
+                <li class="dropdown" id="authenticated-div">
+
+                    <!-- Mes Formation (si Formateur) -->
+                    {% if user.formateur %}
+                        <button class="bt">
+                            <a href="{% url 'formation:formation_list_current_formateur' user.formateur.id %}">
+                                <span>Mes formation</span>
+                            </a>
+                        </button>
+                    {% endif %}
+                </li>
+                <li class="dropdown" id="authenticated-div">
+                    <!-- Mes Inscription (si Students) -->
+                    {% if user.student %}
+                        <button class="bt">
+                            <a href="{% url 'formation:inscription_list_current_student' user.student.id %}">
+                                <span>Mes inscription</span>
+                            </a>
+                        </button>
+                    {% endif %}
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                    <li class="dropdown" id="authenticated-div">
+                        <!-- User Name (debug) -->
+                        <div> {{ user }}</div>
+                        <!-- Login Button -->
+                            <a href="{% url 'logout' %}">
+                                <span>Déconnexion</span>
+                            </a>
+
+                    </li>
+                {% else %}
+                    <li class="dropdown" id="authenticated-div">
+                            <a href="{% url 'login' %}">
+                                <span>Connexion</span>
+                            </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
 </nav>
-<div class="block_content">
+<div id="main" class="container-fluid p0-50">
     {% block content %}
     {% endblock content %}
 </div>
