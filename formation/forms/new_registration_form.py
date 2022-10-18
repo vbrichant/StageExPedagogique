@@ -5,7 +5,6 @@ from django.forms import ModelForm
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 
-
 from formation.model.Inscription import Inscription
 from formation.model.SessionFormation import SessionFormation
 

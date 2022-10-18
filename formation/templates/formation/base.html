@@ -3,6 +3,7 @@
 {% bootstrap_css %}
 {% bootstrap_javascript jquery=1 %}
 <link rel="stylesheet" href="{% static 'formation/style.css' %}">
+<body>
 <nav class="nav_bar">
     <div class="formation_list_link">
         <a href="{% url 'formation:formation_list' %}">Index/Home</a>
@@ -43,3 +44,4 @@
     {% block content %}
     {% endblock content %}
 </div>
+</body>
