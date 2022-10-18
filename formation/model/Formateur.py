@@ -7,7 +7,6 @@ class Formateur(models.Model):
     matricule = models.CharField(max_length=50, default=0)
 
     def __str__(self):
-        print(self.user.first_name)
         return self.user.first_name + " " + self.user.last_name
 
     def get_name(self):

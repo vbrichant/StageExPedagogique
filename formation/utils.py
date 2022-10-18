@@ -30,7 +30,8 @@ class Calendar(HTMLCalendar):
         return f'<tr> {week} </tr>'
 
     def formatmonth(self, theyear, themonth, withyear=True):
-        session = SessionFormation.objects.filter(datetime__year=theyear, datetime__month=themonth)
+        session = SessionFormation.objects.filter(datetime__year=theyear, datetime__month=themonth).select_related(
+            'formation', )
 
         cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
         cal += f'{self.formatmonthname(theyear, themonth, withyear=withyear)}\n'

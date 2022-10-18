@@ -9,4 +9,4 @@ class FormationListView(generic.ListView):
 
     def get_queryset(self):
         """Return all formation not close"""
-        return Formation.objects.all()
+        return Formation.objects.select_related('formateur__user').all()
