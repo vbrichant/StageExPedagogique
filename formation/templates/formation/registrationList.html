@@ -3,20 +3,46 @@
 {% load bootstrap3 %}
 
 {% block content %}
-    <div class="registration_list_div">
-        <h1>Liste de vos inscription à des formations</h1>
-        {% if registration_list %}
-            <ul>
-                {% for inscription in registration_list %}
-                    <li>
-                        <a href="{% url 'formation:session_detail' inscription.session.id %}"> {{ inscription.session.formation.name }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-10">
+                <h1>Liste de vos inscription à des formations</h1>
+            </div>
+            <div class="col-md-2" style="margin-top: 20px">
+                <div class="btn-group pull-right">
+                    <button id="btn-action" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Actions
+                        <span class="caret"></span>
+                    </button>
 
-        {% else %}
-            <p>Aucune inscription disponible</p>
-        {% endif %}
-        <button><a href="{% url 'formation:newRegistrationForm' %}"> Créer une nouvelle inscription </a></button>
+                    <ul class="dropdown-menu dropdown-menu-large row ">
+                        {% if user.formateur %}
+                            <li>
+
+                                <a href="{% url 'formation:newRegistrationForm' %}"
+                                   class="no_spinner">
+                                    Créer une nouvelle inscription
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
+        <div class="panel panel-default">
+            {% if registration_list %}
+                <ul>
+                    {% for inscription in registration_list %}
+                        <li>
+                            <a href="{% url 'formation:session_detail' inscription.session.id %}"> {{ inscription.session.formation.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            {% else %}
+                <p>Aucune inscription disponible</p>
+            {% endif %}
+        </div>
 {% endblock content %}
