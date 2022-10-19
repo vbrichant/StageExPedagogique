@@ -19,11 +19,7 @@ class SessionFormation(models.Model):
         return self.inscription_set.count()
 
     def get_students_registered(self):
-        inscription_list = self.inscription_set.values_list("student", flat=True)
-        student_list = []
-        for inscription in inscription_list:
-            student_list.append(int(inscription))
-        return inscription_list
+        return self.inscription_set.values_list("student", flat=True)
 
     def is_open(self):
         now = timezone.now()
