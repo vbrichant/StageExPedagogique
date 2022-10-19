@@ -2,28 +2,32 @@
 {% load static %}
 {% block content %}
     <div class="session_detail">
-        <h1> Formation : {{ session.formation.name }} </h1>
-        <h1> Formateur : {{ session.formation.formateur }} </h1>
-        <p> Date : {{ session.date }}</p>
-        <p> Lieux : {{ session.place }}</p>
-        <p> Nombre d'étudiant inscrit : {{ session.get_count_registration }}/{{ session.max_students }}</p>
+        <h1> Formation : {{ session_formation.formation.name }} </h1>
+        <h1> Formateur : {{ session_formation.formation.formateur }} </h1>
+        <p> Date : {{ session_formation.date }}</p>
+        <p> Lieux : {{ session_formation.place }}</p>
+        <p> Nombre d'étudiant inscrit
+            : {{ session_formation.get_count_registration }}/{{ session_formation.max_students }}</p>
         <div class="session_registration_cancel_registration_div">
             {% if user.student.id in session.get_students_registered %}
                 <button class="cancel_registration_session_button">
-                    <a href="{% url 'formation:cancelRegistrationSession' session.id %}">Se désinscrire</a>
+                    <a href="{% url 'formation:cancelRegistrationSession' session_formation.id %}">Se désinscrire</a>
                 </button>
             {% else %}
-                {% if user.student and session.get_count_registration < session.max_students %}
+                {% if user.student and session_formation.get_count_registration < session_formation.max_students %}
                     <button class="registration_session_button">
-                        <a href="{% url 'formation:registrationSession' session.id %}">S'inscrire a la session</a>
+                        <a href="{% url 'formation:registrationSession' session_formation.id %}">S'inscrire a la
+                            session</a>
                     </button>
                 {% endif %}
             {% endif %}
         </div>
         <div class="modification_session_div">
-            {% if user.formateur and session.formation.formateur == user.formateur %}
-                <button class="modification_session_button"><a href="{% url 'formation:updateSession' session.id %}">
-                    Modifier la session</a>
+            {% if user.formateur and session_formation.formation.formateur == session_formation.formateur %}
+                <button class="modification_session_button">
+                    <a href="{% url 'formation:updateSession' session_formation.id %}">
+                        Modifier la session
+                    </a>
                 </button>
             {% endif %}
         </div>

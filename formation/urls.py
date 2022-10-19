@@ -70,4 +70,6 @@ urlpatterns = [
 
     # graph_models
     path("schema/", Schema.as_view(), name='schemaModels'),
+    # debug Toolbar
+    path('__debug__/', include('debug_toolbar.urls')),
 ]
