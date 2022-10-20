@@ -27,13 +27,13 @@
                                 </a>
                             </li>
                         {% endif %}
-                        {% if user.student.id in session.get_students_registered %}
+                        {% if session_formation.already_regitered %}
                             <li >
                                 <a href="{% url 'formation:cancelRegistrationSession' session_formation.id %}">
                                     <form method="post" style="margin: 0"> Se désinscrire</form>
                                 </a>
                             </li>
-                        {% elif user.student and session_formation.get_count_registration < session_formation.max_students %}
+                        {% elif user.student and session_formation.inscription_count < session_formation.max_students %}
                                 <li>
                                     <a href="{% url 'formation:registrationSession' session_formation.id %}">
                                     <form method="post" style="margin: 0">S'inscrire </form>
@@ -51,7 +51,7 @@
         <p> Date : {{ session_formation.datetime }}</p>
         <p> Lieux : {{ session_formation.place }}</p>
         <p> Nombre d'étudiant inscrit
-            : {{ session_formation.get_count_registration }}/{{ session_formation.max_students }}</p>
+            : {{ session_formation.inscription_count }}/{{ session_formation.max_students }}</p>
     </div>
 {% endblock content %}
 

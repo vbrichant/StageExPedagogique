@@ -1,4 +1,4 @@
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Count, Subquery, OuterRef, Exists
 from django.views import generic
 
 from formation.model.Formation import Formation
@@ -14,9 +14,15 @@ class DetailSessionView(generic.DetailView):
 
     def get_queryset(self):
         queryset = SessionFormation.objects.filter(id=self.kwargs['sessionFormation_id']).select_related(
-            'formation__formateur__user',).prefetch_related(
-            Prefetch(
-                'inscription_set'
-            ),
-        )
+            'formation__formateur__user',
+        ).annotate(
+            inscription_count=Count('inscription'),
+            already_regitered=Exists(
+                Inscription.objects.filter(
+                    session_id=OuterRef("id"),
+                    student__user_id=self.request.user.pk
+                )
+            ))
+        print(queryset.first().already_regitered)
         return queryset
+    # ,students_ids_registered=

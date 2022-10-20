@@ -15,12 +15,6 @@ class SessionFormation(models.Model):
     def __str__(self):
         return self.formation.name + " " + str(self.datetime)
 
-    def get_count_registration(self):
-        return self.inscription_set.count()
-
-    def get_students_registered(self):
-        return self.inscription_set.values_list("student", flat=True)
-
     def is_open(self):
         now = timezone.now()
         return self.datetime > now
