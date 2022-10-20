@@ -29,3 +29,10 @@ div#main {
 
 nav {display: inline-block}
 
+div#formation_session_table table {
+
+}
+div#formation_session_table th, div#formation_session_table td {
+
+    text-align: center;
+}

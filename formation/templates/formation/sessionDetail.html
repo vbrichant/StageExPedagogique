@@ -1,36 +1,57 @@
 {% extends 'formation/base.html' %}
 {% load static %}
 {% block content %}
-    <div class="session_detail">
-        <h1> Formation : {{ session_formation.formation.name }} </h1>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-10">
+                <h2>{{ session_formation.formation.name }} </h2>
+            </div>
+            <div class="col-md-2" style="margin-top: 20px">
+                <div class="btn-group pull-right">
+                    <button id="btn-action" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Actions
+                        <span class="caret"></span>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-large row ">
+                        {% if user.formateur and session_formation.formation.formateur == user.formateur %}
+                            <li>
+                                <a href="{% url 'formation:updateSession' session_formation.id %}" class="no_spinner">
+                                    <form method="post" style="margin: 0">Modifier la session</form>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'formation:deleteSession' session_formation.id %}" class="no_spinner">
+                                    <form method="post" style="margin: 0"> Supprimer la formation</form>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if user.student.id in session.get_students_registered %}
+                            <li >
+                                <a href="{% url 'formation:cancelRegistrationSession' session_formation.id %}">
+                                    <form method="post" style="margin: 0"> Se désinscrire</form>
+                                </a>
+                            </li>
+                        {% elif user.student and session_formation.get_count_registration < session_formation.max_students %}
+                                <li>
+                                    <a href="{% url 'formation:registrationSession' session_formation.id %}">
+                                    <form method="post" style="margin: 0">S'inscrire </form>
+                                    </a>
+                                </li>
+
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default" style="padding: 10px">
         <h1> Formateur : {{ session_formation.formation.formateur }} </h1>
-        <p> Date : {{ session_formation.date }}</p>
+        <p> Date : {{ session_formation.datetime }}</p>
         <p> Lieux : {{ session_formation.place }}</p>
         <p> Nombre d'étudiant inscrit
             : {{ session_formation.get_count_registration }}/{{ session_formation.max_students }}</p>
-        <div class="session_registration_cancel_registration_div">
-            {% if user.student.id in session.get_students_registered %}
-                <button class="cancel_registration_session_button">
-                    <a href="{% url 'formation:cancelRegistrationSession' session_formation.id %}">Se désinscrire</a>
-                </button>
-            {% else %}
-                {% if user.student and session_formation.get_count_registration < session_formation.max_students %}
-                    <button class="registration_session_button">
-                        <a href="{% url 'formation:registrationSession' session_formation.id %}">S'inscrire a la
-                            session</a>
-                    </button>
-                {% endif %}
-            {% endif %}
-        </div>
-        <div class="modification_session_div">
-            {% if user.formateur and session_formation.formation.formateur == session_formation.formateur %}
-                <button class="modification_session_button">
-                    <a href="{% url 'formation:updateSession' session_formation.id %}">
-                        Modifier la session
-                    </a>
-                </button>
-            {% endif %}
-        </div>
     </div>
 {% endblock content %}
 

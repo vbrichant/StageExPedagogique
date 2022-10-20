@@ -19,9 +19,8 @@
                     <ul class="dropdown-menu dropdown-menu-large row ">
                         {% if user.formateur %}
                             <li>
-                                <a href="{% url 'formation:newFormationForm' %}"
-                                   class="no_spinner">
-                                    Ajouter une formation
+                                <a href="{% url 'formation:newFormationForm' %}" class="no_spinner">
+                                    <form method="post" style="margin: 0">Ajouter une formation</form>
                                 </a>
                             </li>
                         {% endif %}
@@ -31,7 +30,7 @@
         </div>
 
     </div>
-    <div class="panel panel-default">
+    <div class="panel panel-default" style="padding: 10px">
 
         {% if formation_list %}
             <ul>
