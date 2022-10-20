@@ -1,7 +1,13 @@
 from django.contrib import admin
 
+from formation.model.Formateur import Formateur
+from formation.model.Formation import Formation
+from formation.model.Inscription import Inscription
+from formation.model.SessionFormation import SessionFormation
+from formation.model.Student import Student
+
+
 # Register your models here.
-from .models import Formateur, Formation, SessionFormation, Student, Inscription
 
 
 class SessionInLine(admin.TabularInline):
@@ -10,11 +16,11 @@ class SessionInLine(admin.TabularInline):
 
 
 class FormationAdmin(admin.ModelAdmin):
-    fieldsets = [('name', {'fields': ['name']}),
-                 ('description', {'fields': ['description']}),
-                 ('formateur', {'fields': ['formateur']})]
+    fieldsets = [('formateur', {'fields': ['formateur']}),
+                 ('name', {'fields': ['name']}),
+                 ('description', {'fields': ['description']})]
     inlines = [SessionInLine]
-    list_display = ('name', 'description', 'formateur')
+    list_display = ('name', 'description')
 
 
 admin.site.register(Formation, FormationAdmin)
@@ -25,15 +31,6 @@ class FormationInLine(admin.TabularInline):
     extra = 1
 
 
-class FormateurAdmin(admin.ModelAdmin):
-    fieldsets = [('firstname', {'fields': ['firstname']}),
-                 ('lastname', {'fields': ['lastname']})]
-    inlines = [FormationInLine]
-
-
-admin.site.register(Formateur, FormateurAdmin)
-
-
 class InscriptionInLine(admin.TabularInline):
     model = Inscription
     extra = 5
@@ -41,7 +38,7 @@ class InscriptionInLine(admin.TabularInline):
 
 class SessionFormationAdmin(admin.ModelAdmin):
     fieldsets = [('formation', {'fields': ['formation']}),
-                 ('date', {'fields': ['date']}),
+                 ('datetime', {'fields': ['datetime']}),
                  ('place', {'fields': ['place']}),
                  ('max_students', {'fields': ['max_students']})]
     inlines = [InscriptionInLine]
@@ -58,10 +55,21 @@ class InscriptionAdmin(admin.ModelAdmin):
 admin.site.register(Inscription, InscriptionAdmin)
 
 
+# User Models
+class FormateurAdmin(admin.ModelAdmin):
+    fieldsets = [('user', {'fields': ['user']}),
+                 ('matricule', {'fields': ['matricule']})
+                 ]
+    inlines = [FormationInLine]
+
+
+admin.site.register(Formateur, FormateurAdmin)
+
+
 class StudentAdmin(admin.ModelAdmin):
-    fieldsets = [('matricule', {'fields': ['matricule']}),
-                 ('name', {'fields': ['firstname']}),
-                 (None, {'fields': ['lastname']})]
+    fieldsets = [('user', {'fields': ['user']}),
+                 ('matricule', {'fields': ['matricule']})
+                 ]
     inlines = [InscriptionInLine]
 
 

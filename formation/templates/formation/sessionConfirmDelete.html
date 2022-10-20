@@ -1,0 +1,16 @@
+{% extends 'formation/base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block content %}
+    <div class="del_session_confirmation_form">
+        <form method="post">{% csrf_token %}
+
+
+            <p>Etes-vous sûr de vouloir supprimer : "{{ object }}"?</p>
+
+
+            <input type="submit" value="Confirmer">
+        </form>
+    </div>
+{% endblock content %}

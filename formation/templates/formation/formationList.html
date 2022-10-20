@@ -6,7 +6,7 @@
     <div class="page-header">
         <div class="row">
             <div class="col-md-10">
-                <h2>Liste des formations organisées</h2>
+                <h2 class="title_formation_list_current_formateur">Liste des formations que vous organisez</h2>
             </div>
             <div class="col-md-2" style="margin-top: 20px">
                 <div class="btn-group pull-right">
@@ -19,9 +19,8 @@
                     <ul class="dropdown-menu dropdown-menu-large row ">
                         {% if user.formateur %}
                             <li>
-                                <a href="{% url 'formation:newFormationForm' %}"
-                                   class="no_spinner">
-                                    Ajouter une formation
+                                <a href="{% url 'formation:newFormationForm' %}" class="no_spinner">
+                                    <form method="post" style="margin: 0">Ajouter une formation</form>
                                 </a>
                             </li>
                         {% endif %}
@@ -29,8 +28,9 @@
                 </div>
             </div>
         </div>
+
     </div>
-    <div class="panel panel-default">
+    <div class="panel panel-default" style="padding: 10px">
 
         {% if formation_list %}
             <ul>
@@ -43,6 +43,5 @@
         {% else %}
             <p>Aucune formation n'est disponible</p>
         {% endif %}
-
     </div>
 {% endblock content %}

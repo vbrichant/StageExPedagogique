@@ -1,0 +1,76 @@
+{% load bootstrap3 %}
+{% load static %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery=1 %}
+<link rel="stylesheet" href="{% static 'formation/style.css' %}">
+<body class="">
+<nav class="navbar navbar-default navbar-fixed-top justify-content-start flew-nowrap">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a id="formation-list-link" class="navbar-brand" href="{% url 'formation:formation_list' %}">
+                <img src="/static/img/logo_osis.png" alt="OSIS" style="margin-top: -10px; margin-left: -10px"></a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown" id="calendar-link">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button">
+                        <span>
+                        Formation
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{% url 'formation:calendar' %}">
+                                <span>Calendrier des formation</span>
+                            </a>
+                        </li>
+                        <li id="authenticated-div">
+                            {% if user.formateur %}
+                                <a href="{% url 'formation:formation_list_current_formateur' user.formateur.id %}">
+                                    <span>Mes formation</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li  id="authenticated-div">
+                            <!-- Mes Inscription (si Students) -->
+                            {% if user.student %}
+                                <a href="{% url 'formation:inscription_list_current_student' user.student.id %}">
+                                    <span>Mes inscription</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                    <li class="dropdown" id="authenticated-div">
+                        <!-- User Name (debug) -->
+                        <a>
+                            <span class="glyphicon glyphicon-user"> {{ user }}</span>
+                        </a>
+                    </li>
+                    <li class="dropdown" id="authenticated-div">
+                        <!-- Login Button -->
+                        <a href="{% url 'logout' %}">
+                            <span class="glyphicon glyphicon-log-out">Déconnexion</span>
+                        </a>
+
+                    </li>
+
+                {% else %}
+                    <li class="dropdown" id="authenticated-div">
+                        <a href="{% url 'login' %}">
+                            <span class="glyphicon glyphicon-log-in">Connexion</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+<div id="main" class="container-fluid p0-50">
+    {% block content %}
+    {% endblock content %}
+</div>
+</body>

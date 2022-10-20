@@ -1,13 +1,17 @@
 {% extends 'formation/base.html' %}
-{% load bootstrap3 %}
 {% load static %}
-
+{% load bootstrap3 %}
 {% block content %}
     <div class="panel panel-default" style="padding: 10px">
         <form method="post">{% csrf_token %}
             {% bootstrap_form form %}
 
-            <input type="submit" value="Créer la formation formation">
+            <input type="submit" value="Créer l'inscription">
         </form>
     </div>
+    {% if messages %}
+        {% for message in messages %}
+            <p> {{ message }}</p>
+        {% endfor %}
+    {% endif %}
 {% endblock content %}
