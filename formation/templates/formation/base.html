@@ -41,21 +41,19 @@
                         </li>
                     </ul>
                 </li>
-
-
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                     <li class="dropdown" id="authenticated-div">
                         <!-- User Name (debug) -->
                         <a>
-                            <span> {{ user }}</span>
+                            <span class="glyphicon glyphicon-user"> {{ user }}</span>
                         </a>
                     </li>
                     <li class="dropdown" id="authenticated-div">
                         <!-- Login Button -->
                         <a href="{% url 'logout' %}">
-                            <span>Déconnexion</span>
+                            <span class="glyphicon glyphicon-log-out">Déconnexion</span>
                         </a>
 
                     </li>
@@ -63,7 +61,7 @@
                 {% else %}
                     <li class="dropdown" id="authenticated-div">
                         <a href="{% url 'login' %}">
-                            <span>Connexion</span>
+                            <span class="glyphicon glyphicon-log-in">Connexion</span>
                         </a>
                     </li>
                 {% endif %}

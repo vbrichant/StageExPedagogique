@@ -22,7 +22,7 @@
 
                                 <a href="{% url 'formation:newRegistrationForm' %}"
                                    class="no_spinner">
-                                    Créer une nouvelle inscription
+                                    <form method="post" style="margin: 0">Créer une nouvelle inscription</form>
                                 </a>
                             </li>
                         {% endif %}
@@ -31,18 +31,18 @@
             </div>
         </div>
     </div>
-        <div class="panel panel-default">
-            {% if registration_list %}
-                <ul>
-                    {% for inscription in registration_list %}
-                        <li>
-                            <a href="{% url 'formation:session_detail' inscription.session.id %}"> {{ inscription.session.formation.name }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
+    <div class="panel panel-default">
+        {% if registration_list %}
+            <ul>
+                {% for inscription in registration_list %}
+                    <li>
+                        <a href="{% url 'formation:session_detail' inscription.session.id %}"> {{ inscription.session.formation.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
 
-            {% else %}
-                <p>Aucune inscription disponible</p>
-            {% endif %}
-        </div>
+        {% else %}
+            <p>Aucune inscription disponible</p>
+        {% endif %}
+    </div>
 {% endblock content %}

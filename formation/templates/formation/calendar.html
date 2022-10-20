@@ -3,6 +3,9 @@
 
 {% block content %}
     <link rel="stylesheet" href="{% static 'formation/calendar.css' %}">
+    <div class="panel panel-default" style="padding: 10px 20px 20px 20px">
+
+
     <div class="clearfix">
         <button class="button-prev">
             <a class=" btn-prev btn-info" href="{% url 'formation:calendar' %}?{{ prev_month }}"> Mois précédent </a>
@@ -12,4 +15,5 @@
         </button>
     </div>
     {{ calendar }}
+    </div>
 {% endblock %}
