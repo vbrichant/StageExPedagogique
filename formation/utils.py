@@ -13,7 +13,9 @@ class Calendar(HTMLCalendar):
         super(Calendar, self).__init__()
 
     def formatday(self, day, sessions):
-        session_per_day = sessions.filter(datetime__day=day)
+        session_per_day = []
+        if day != 0:
+            session_per_day = sessions.filter(datetime__day=day)
         d = ''
         for session in session_per_day:
             url = reverse('formation:session_detail', kwargs={'sessionFormation_id': session.id})
@@ -29,7 +31,8 @@ class Calendar(HTMLCalendar):
         return f'<tr> {week} </tr>'
 
     def formatmonth(self, theyear, themonth, withyear=True):
-        sessions = SessionFormation.objects.filter(datetime__year=theyear, datetime__month=themonth).select_related(
+        sessions = SessionFormation.objects.prefetch_related().filter(datetime__year=theyear,
+                                                                      datetime__month=themonth).select_related(
             'formation', )
 
         cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
