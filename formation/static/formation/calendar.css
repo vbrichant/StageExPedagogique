@@ -1,7 +1,7 @@
 /* cal/static/cal/css/styles.css */
 
 .calendar {
-    width: 70%;
+    width: 100%;
     margin: auto;
     font-size: 13px;
 }
@@ -17,7 +17,7 @@
 }
 
 .calendar td {
-    width: 200px;
+    width: 300px;
     height: 100px;
     padding: 20px 0 0 5px;
 }
@@ -30,9 +30,10 @@
     font-size: 16px;
 }
 
-ul {
-    height: 100%;
+ul.days_list {
+    height: 120px;
     padding: 0 5px 0 20px;
+    width: 120px;
 }
 
 .clearfix {

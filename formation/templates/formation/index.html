@@ -3,10 +3,35 @@
 {% load bootstrap3 %}
 
 {% block content %}
-    <div class="formation_list">
-        <div class="title_index_div">
-            <h1 class="title_index">Liste des formations organisées</h1>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-10">
+                <h2>Liste des formations organisées</h2>
+            </div>
+            <div class="col-md-2" style="margin-top: 20px">
+                <div class="btn-group pull-right">
+                    <button id="btn-action" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Actions
+                        <span class="caret"></span>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-large row ">
+                        {% if user.formateur %}
+                            <li>
+                                <a href="{% url 'formation:newFormationForm' %}"
+                                   class="no_spinner">
+                                    Ajouter une formation
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
         </div>
+    </div>
+    <div class="panel panel-default">
+
         {% if formation_list %}
             <ul>
                 {% for formation in formation_list %}
@@ -18,10 +43,6 @@
         {% else %}
             <p>Aucune formation n'est disponible</p>
         {% endif %}
-        {% if user.formateur %}
-            <button class="new_formation_button">
-                <a href="{% url 'formation:newFormationForm' %}"> Créer une nouvelle Formation </a>
-            </button>
-        {% endif %}
+
     </div>
 {% endblock content %}

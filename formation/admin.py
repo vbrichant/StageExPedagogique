@@ -1,7 +1,13 @@
 from django.contrib import admin
 
+from formation.model.Formateur import Formateur
+from formation.model.Formation import Formation
+from formation.model.Inscription import Inscription
+from formation.model.SessionFormation import SessionFormation
+from formation.model.Student import Student
+
+
 # Register your models here.
-from .models import Formateur, Formation, SessionFormation, Student, Inscription
 
 
 class SessionInLine(admin.TabularInline):
@@ -32,8 +38,7 @@ class InscriptionInLine(admin.TabularInline):
 
 class SessionFormationAdmin(admin.ModelAdmin):
     fieldsets = [('formation', {'fields': ['formation']}),
-                 ('date', {'fields': ['date']}),
-                 ('time', {'fields': ['time']}),
+                 ('datetime', {'fields': ['datetime']}),
                  ('place', {'fields': ['place']}),
                  ('max_students', {'fields': ['max_students']})]
     inlines = [InscriptionInLine]

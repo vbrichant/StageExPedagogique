@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-    <div class="new_formation_form">
+    <div class="panel panel-default" style="padding: 10px">
         <form method="post">{% csrf_token %}
             {% bootstrap_form form %}
 

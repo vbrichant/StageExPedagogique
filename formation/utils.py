@@ -3,7 +3,7 @@ from calendar import HTMLCalendar
 
 from django.urls import reverse
 
-from .models import SessionFormation
+from formation.model.SessionFormation import SessionFormation
 
 
 class Calendar(HTMLCalendar):
@@ -12,11 +12,10 @@ class Calendar(HTMLCalendar):
         self.month = datetime.today().month
         super(Calendar, self).__init__()
 
-    def formatday(self, day, session):
-        session_per_day = session.filter(date__day=day)
+    def formatday(self, day, sessions):
+        session_per_day = sessions.filter(datetime__day=day)
         d = ''
         for session in session_per_day:
-            # d += f"<li> {session.formation.name} </li>"
             url = reverse('formation:session_detail', kwargs={'sessionFormation_id': session.id})
             d += f"<li><a href='{url}'> {session.formation.name} </a></li>"
         if day != 0:
@@ -30,11 +29,12 @@ class Calendar(HTMLCalendar):
         return f'<tr> {week} </tr>'
 
     def formatmonth(self, theyear, themonth, withyear=True):
-        session = SessionFormation.objects.filter(date__year=theyear, date__month=themonth)
+        sessions = SessionFormation.objects.filter(datetime__year=theyear, datetime__month=themonth).select_related(
+            'formation', )
 
         cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
         cal += f'{self.formatmonthname(theyear, themonth, withyear=withyear)}\n'
         cal += f'{self.formatweekheader()}\n'
         for week in self.monthdays2calendar(theyear, themonth):
-            cal += f'{self.formatweek(theweek=week, session=session)}\n'
+            cal += f'{self.formatweek(theweek=week, session=sessions)}\n'
         return cal

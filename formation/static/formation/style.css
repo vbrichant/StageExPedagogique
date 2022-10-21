@@ -1,38 +1,38 @@
-nav {
-    background-color: darkgray;
-    padding: 10px;
+
+html {
+    height: 100%;
+    box-sizing: border-box;
 }
 
-nav div {
-    display: inline-block;
+body {
+    position: relative;
+    margin: 0;
+    padding-top: 70px;
+    padding-bottom: 6rem;
+    min-height: 100%;
 }
 
-.logout_button, .login_button {
-    position: absolute;
-    right: 5em;
-    top: 0.5em;
-}
-
-td, th {
-    border: 1px solid black;
-}
-
-.title_index_div {
-    align-items: center;
-}
-
-.title_index{
-    align-items: center;
-    margin: 0 0 0 0;
-    padding-top: 5px;
-}
-
-.block_content{
+div#main {
     vertical-align: center;
     align-self: center;
-    background-color: beige;
     height: 100%;
     margin-inline: 10em;
     padding-inline: 2em;
-    padding-top: 20px;
+    padding-top: 70px;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+nav {display: inline-block}
+
+div#formation_session_table table {
+
+}
+div#formation_session_table th, div#formation_session_table td {
+
+    text-align: center;
 }
